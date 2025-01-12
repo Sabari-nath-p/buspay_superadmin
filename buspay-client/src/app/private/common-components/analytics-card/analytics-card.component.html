@@ -12,7 +12,7 @@
     class=""
     style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px"
   >
-    <div
+    <!-- <div
       class="icon"
       style="
         width: 32px;
@@ -23,8 +23,8 @@
         align-items: center;
         justify-content: center;
       "
-    >
-      <svg
+    > -->
+      <!-- <svg
         width="44"
         height="38"
         viewBox="0 0 44 38"
@@ -85,8 +85,16 @@
             <rect width="44" height="38" fill="white" />
           </clipPath>
         </defs>
-      </svg>
-    </div>
+      </svg> -->
+
+      <app-icon
+        [name]="'money'"
+        [title]="'user'"
+        className="icon-size-50"
+        ariaHidden="false"
+        focusable="false"
+      >Money</app-icon>
+    <!-- </div> -->
     <span style="color: #64748b">{{ title }}</span>
   </div>
 
