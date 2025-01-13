@@ -25,9 +25,28 @@
         [analyticValue]="'8'"
         [trendLine]="'from last week'"
       ></app-analytics-card>
+
+      <div class="container mt-5">
+        <button class="btn btn-success" (click)="onClick()">Open modal</button>
+      </div>
+      <app-common-modal
+        [isHeaderRequired]="true"
+        [isFooterRequired]="true"
+        [content]="sample"
+        [heading]="'sample'"
+      ></app-common-modal>
     </div>
   </div>
 </div>
 
 <!-- Dont remove -->
 <app-icons-library></app-icons-library>
+<!-- <router-outlet /> -->
+
+<ng-template #sample>
+  This is sample content
+  <div class="bg-success">
+    blablabla
+    <button class="btn btn-danger">try</button>
+  </div>
+</ng-template>
