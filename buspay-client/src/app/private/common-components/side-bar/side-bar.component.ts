@@ -15,7 +15,7 @@ export class SideBarComponent {
 
   menuList: MenuList[]=[
     {
-      routerLink:'/home',
+      routerLink:'',
       component: AppComponent,
       menuTitle: 'Home',
       icon: 'home',
