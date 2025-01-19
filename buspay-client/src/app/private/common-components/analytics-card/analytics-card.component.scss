@@ -1,3 +1,42 @@
 .card-header {
   background-color: transparent !important;
 }
+
+.analytics-data {
+  .amount {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .trend-line {
+    color: #000;
+  }
+}
+@media (max-width: 900px) {
+  .analytics-data {
+    div {
+      width: 50%;
+    }
+
+    .amount {
+      font-size: 18px;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .analytics-data {
+    div {
+      width: 50%;
+    }
+
+    .amount {
+      font-size: 18px;
+    }
+    .trend-line {
+      color: #000;
+      font-size: 10px;
+    }
+  }
+}
