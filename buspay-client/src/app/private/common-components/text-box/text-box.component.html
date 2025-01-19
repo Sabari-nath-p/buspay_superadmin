@@ -1,0 +1,8 @@
+<div class="form-control app-c-text-box">
+  <span *ngIf="iconClass.length" [class]="iconClass"></span>
+  <input
+    type="text"
+    [placeholder]="placeholder"
+    (input)="onValueChangedEmit($event)"
+  />
+</div>
