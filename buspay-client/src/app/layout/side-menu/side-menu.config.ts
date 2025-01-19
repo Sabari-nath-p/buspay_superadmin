@@ -20,6 +20,11 @@ export const menuList: MenuItem[] = [
     menuTitle: 'Bus Preference',
     icon: 'integrations',
   },
+  {
+    routerLink: '/coupons',
+    menuTitle: 'Coupons',
+    icon: 'integrations',
+  },
   // {
   //   routerLink: '/',
   //   menuTitle: '',
@@ -29,11 +34,6 @@ export const menuList: MenuItem[] = [
     routerLink: '/integrations',
     menuTitle: 'Integrations',
     icon: 'integrations',
-  },
-  {
-    routerLink: '/coupons',
-    menuTitle: 'Coupons',
-    icon: 'money',
   },
   {
     routerLink: '/calender',
