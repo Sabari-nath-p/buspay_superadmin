@@ -1,27 +1,27 @@
 import { MenuItem } from '../../shared/side-menu/menuItem.model';
 export const menuList: MenuItem[] = [
   {
-    routerLink: '/dashboard',
+    routerLink: 'dashboard',
     menuTitle: 'Dashboards',
     icon: 'home',
   },
   {
-    routerLink: '/user',
+    routerLink: 'users',
     menuTitle: 'User',
     icon: 'user',
   },
   {
-    routerLink: '/bus-type',
+    routerLink: 'bus-type',
     menuTitle: 'Bus Type',
     icon: 'integrations',
   },
   {
-    routerLink: '/preference',
+    routerLink: 'preferences',
     menuTitle: 'Bus Preference',
     icon: 'integrations',
   },
   {
-    routerLink: '/coupons',
+    routerLink: 'coupons',
     menuTitle: 'Coupons',
     icon: 'integrations',
   },
