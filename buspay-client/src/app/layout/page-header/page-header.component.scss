@@ -62,6 +62,13 @@
     }
   }
 
+  .vertical-line {
+    width: 1px;
+    height: 40px; /* Match the avatar height */
+    background-color: rgb(202, 202, 202);
+    margin: 0 10px; /* Add spacing between sections */
+  }
+
   .avatar {
     img {
       width: 40px;

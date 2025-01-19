@@ -21,6 +21,10 @@
     ></app-icon>
   </div>
 
+  <div class="menu-tag" *ngIf="isExpanded">
+    Menu
+    <hr />
+  </div>
   <ul class="menu-items menu--parent">
     <ng-template
       *ngFor="let menuItem of activeMenuList"
