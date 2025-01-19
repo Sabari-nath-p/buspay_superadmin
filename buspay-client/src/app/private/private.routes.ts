@@ -12,6 +12,7 @@ export const privateRoutes: Routes = [
       { path: '', component: DashboardComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'integrations', component: DashboardComponent },
+      { path: 'settings', component: DashboardComponent },
     ],
   },
 ];

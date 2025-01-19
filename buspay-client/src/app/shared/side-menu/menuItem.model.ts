@@ -1,5 +1,5 @@
 export interface MenuItem {
-  routerLink: string;
+  routerLink: string | null;
   menuTitle: string;
   icon: string;
   isOpen?: boolean;

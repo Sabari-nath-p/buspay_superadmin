@@ -114,10 +114,15 @@ $transition-duration: 0.3s;
     }
 
     &.menu--child {
+      hr {
+        margin: 0 !important;
+        margin-top: 0.1rem !important;
+        opacity: 0.1;
+      }
       .menu-item {
         display: flex;
         align-items: center;
-        padding: 10px 20px;
+        padding: 25px 20px;
         color: $menu-font-color;
         cursor: pointer;
         transition: background-color $transition-duration ease,
