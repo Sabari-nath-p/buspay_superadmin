@@ -10,7 +10,7 @@ import { SvgIconsComponent } from '../svg-icons/svg-icons.component';
 })
 export class AnalyticsCardComponent {
   @Input() title: string = '';
-  @Input() titleIcon!: any;
+  @Input() titleIcon: any = "money";
   @Input() analyticValue: string = '';
   @Input() trendLineIcon!: any;
   @Input() trendLine: string = '';

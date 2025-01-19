@@ -1,0 +1,48 @@
+@import "../variables.scss";
+@import "../theme";
+
+* {
+  font-family: $body-font;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.app-l-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  padding-left: 60px;
+}
+
+app-side-menu {
+  flex: 0 0 auto;
+}
+
+.app-l-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+app-page-header {
+  flex: 0 0 auto;
+}
+
+.app-l-content {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+  background: $app-cover-bg;
+}
+
+.app-c-wrapper {
+  height: 100%;
+  padding: 16px;
+  background: $white;
+  box-shadow: 0 1px 5px $box-shadow;
+}

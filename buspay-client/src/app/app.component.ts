@@ -21,16 +21,16 @@ import { CommonModalService } from './private/common-components/common-modal/com
 })
 export class AppComponent {
   title = 'buspay-client';
-  @ViewChild('sample') sample!: TemplateRef<any>;
+  // @ViewChild('sample') sample!: TemplateRef<any>;
 
-  constructor(private modalService: CommonModalService) {}
+  // constructor(private modalService: CommonModalService) {}
 
-  onClick() {
-    this.modalService.showModal({
-      heading: 'Dynamic Modal',
-      content: this.sample,
-      isHeaderRequired: true,
-      isFooterRequired: true,
-    });
-  }
+  // onClick() {
+  //   this.modalService.showModal({
+  //     heading: 'Dynamic Modal',
+  //     content: this.sample,
+  //     isHeaderRequired: true,
+  //     isFooterRequired: true,
+  //   });
+  // }
 }

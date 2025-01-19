@@ -14,4 +14,5 @@ export class SvgIconsComponent {
   @Input() focusable: string | undefined;
   @Input() ariaHidden: string | undefined;
   @Input() title: string | undefined;
+  // @Input() viewBox:any = '0 0 640 512'
 }
