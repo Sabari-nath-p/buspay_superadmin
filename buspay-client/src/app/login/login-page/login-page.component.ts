@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TextBoxComponent } from '../../private/common-components/text-box/text-box.component';
 import { AuthenticationService } from '../../shared/services/authentication.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MasterDataService } from '../../core/services/master-data/master-data.service';
 
 @Component({
   selector: 'app-login-page',
@@ -14,8 +15,9 @@ export class LoginPageComponent {
   loginForm!: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private authService: AuthenticationService,
-    private fb: FormBuilder
+    private masterDataService: MasterDataService
   ) {
     this.loginForm = this.fb.group({
       email: [],
@@ -23,7 +25,9 @@ export class LoginPageComponent {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.logout();
+  }
 
   onLogin() {
     const formData = this.loginForm.value;
@@ -38,6 +42,15 @@ export class LoginPageComponent {
   login(formData: any) {
     const params = formData;
 
-    this.authService.login(params);
+    this.authService.login(params).subscribe((res) => {
+      console.log(res);
+      if (res.tokens && res.tokens.accessToken) {
+        // console.log('AccessToken : ', res.tokens.accessToken);
+        this.authService.setItem('accessToken', res.tokens.accessToken);
+      }
+      if (res.user) {
+        this.masterDataService.setMasterData(res.user);
+      }
+    });
   }
 }

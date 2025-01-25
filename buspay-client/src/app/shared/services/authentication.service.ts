@@ -8,11 +8,14 @@ export class AuthenticationService {
   constructor(private httpClientService: HttpClientService) {}
 
   login(params: any) {
-    this.httpClientService.post('auth/login', params).subscribe((response) => {
-      console.log(response);
-      if (response.tokens && response.tokens.accessToken) {
-        // console.log('AccessToken : ', response.tokens.accessToken);
-      }
-    });
+    return this.httpClientService.post('auth/login', params);
+  }
+
+  setItem(key: string, value: any) {
+    localStorage.setItem(key, value);
+  }
+
+  logout() {
+    localStorage.clear();
   }
 }
