@@ -1,0 +1,83 @@
+<div
+  class="side-menu"
+  [ngClass]="{ expanded: isExpanded, collapsed: !isExpanded }"
+>
+  <div class="menu-toggle" (click)="toggleMenu()">
+    <img
+      [src]="
+        isExpanded ? 'images/buspay-logo-full.png' : 'images/buspay-logo.png'
+      "
+      class="app-l-brand_logo"
+      alt="BusPay Logo"
+    />
+
+    <app-icon
+      *ngIf="isExpanded"
+      name="hamburger"
+      title="Close Menu"
+      className="icon-size-24"
+      ariaHidden="false"
+      focusable="false"
+    ></app-icon>
+  </div>
+
+  <div class="menu-tag" *ngIf="isExpanded">
+    Menu
+    <hr />
+  </div>
+  <ul class="menu-items menu--parent">
+    <ng-template
+      *ngFor="let menuItem of activeMenuList"
+      [ngTemplateOutlet]="menuTemplateRef"
+      [ngTemplateOutletContext]="{ menuItem: menuItem }"
+    ></ng-template>
+  </ul>
+</div>
+
+<ng-template #menuTemplateRef let-menuItem="menuItem">
+  <li>
+    <div
+      class="menu-item"
+      (click)="onClickMenu(menuItem)"
+      [ngClass]="{
+        active:
+          (menuItem.routerLink && currentRouterUrl === menuItem.routerLink) ||
+          menuItem.isOpen
+      }"
+    >
+      <app-icon
+        class="icon"
+        [name]="menuItem.icon"
+        [title]="menuItem.menuTitle"
+        className="icon-size-24"
+        ariaHidden="false"
+        focusable="false"
+      />
+      <span class="menuTitle" [title]="menuItem.menuTitle">
+        {{ menuItem.menuTitle }}
+      </span>
+      <app-icon
+        *ngIf="!menuItem.routerLink"
+        class="icon-expand-menu"
+        [name]="'arrow-medium-down'"
+        [title]="'Expand Menu'"
+        className="icon-size-10"
+        ariaHidden="false"
+        focusable="false"
+      />
+    </div>
+    <ul
+      *ngIf="menuItem.children && menuItem.children.length && menuItem.isOpen"
+      class="menu-items menu--child"
+      [class.isOpen]="menuItem.isOpen"
+    >
+      <hr />
+      <ng-template
+        *ngFor="let childMenu of menuItem.children"
+        [ngTemplateOutlet]="menuTemplateRef"
+        [ngTemplateOutletContext]="{ menuItem: childMenu }"
+      >
+      </ng-template>
+    </ul>
+  </li>
+</ng-template>

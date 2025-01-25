@@ -1,0 +1,32 @@
+<div class="modal" #commonModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" *ngIf="isHeaderRequired">
+        <h4 class="modal-title">{{ heading }}</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          (click)="hideModal()"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <ng-container *ngIf="content">
+          <ng-container *ngTemplateOutlet="content"></ng-container>
+        </ng-container>
+      </div>
+
+      <div class="modal-footer" *ngIf="isFooterRequired">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="hideModal()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
