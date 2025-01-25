@@ -3,6 +3,8 @@
   <input
     type="text"
     [placeholder]="placeholder"
+    [(ngModel)]="value"
+    (ngModelChange)="onChange($event)"
     (input)="onValueChangedEmit($event)"
   />
 </div>
