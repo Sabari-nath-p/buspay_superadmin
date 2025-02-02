@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TextBoxComponent } from '../../private/common-components/text-box/text-box.component';
-import { AuthenticationService } from '../../shared/services/authentication.service';
+import { AuthenticationService } from '../../shared/services/auth/authentication.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MasterDataService } from '../../core/services/master-data/master-data.service';
 
@@ -31,21 +31,15 @@ export class LoginPageComponent {
 
   onLogin() {
     const formData = this.loginForm.value;
-    console.log('Form Data:', formData);
     this.login(formData);
   }
 
-  // {
-  //   email: 'superadmin@buspay.com',
-  //   password: 'adminPassword',
-  // };
   login(formData: any) {
     const params = formData;
 
     this.authService.login(params).subscribe((res) => {
       console.log(res);
       if (res.tokens && res.tokens.accessToken) {
-        // console.log('AccessToken : ', res.tokens.accessToken);
         this.authService.setItem('accessToken', res.tokens.accessToken);
       }
       if (res.user) {

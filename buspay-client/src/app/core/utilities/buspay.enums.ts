@@ -20,3 +20,25 @@ export enum Sizes {
   DoubleExtraLarge = 5,
   Max = 6,
 }
+
+// Add more..
+export enum StatusCode {
+  Success = 200,
+  NotFound = 404,
+  UnAuthorized = 403,
+}
+
+export enum UserStatus {
+  ACTIVE = 'active',
+  OFFLINE = 'offline',
+  DEACTIVATED = 'deactivated',
+  SUSPENDED = 'suspended',
+  PENDING = 'pending',
+}
+
+export enum SettleStatus {
+  REQUESTED = 'requested',
+  PENDING = 'pending',
+  REJECTED = 'rejected',
+  APPROVED = 'approved',
+}

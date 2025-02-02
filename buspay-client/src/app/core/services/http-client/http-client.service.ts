@@ -20,8 +20,10 @@ export class HttpClientService {
    * @param params? Parameters if any.
    * @returns Return API response.
    */
-  get(route: string, params?: any): Observable<any> {
-    const url = this.baseUrl + `${route}`;
+  get(route: string, id?: number, params?: any): Observable<any> {
+    const url = id
+      ? this.baseUrl + `${route}/${id}`
+      : this.baseUrl + `${route}`;
     return this.http
       .get(url, params)
       .pipe(
