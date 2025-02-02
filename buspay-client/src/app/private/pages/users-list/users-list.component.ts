@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ViewProfileComponent } from '../view-profile/view-profile.component';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../shared/services/users/users.service';
@@ -7,8 +7,8 @@ import { SettlementService } from '../../../shared/services/settlements/settleme
 import { TextBoxComponent } from '../../common-components/text-box/text-box.component';
 import { SelectBoxComponent } from '../../common-components/select-box/select-box.component';
 import { DistrictStatesService } from '../../../shared/services/district-state/district-states.service';
-import { Observable } from 'rxjs/internal/Observable';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { DataGridComponent } from '../../common-components/data-grid/data-grid.component';
 
 @Component({
   selector: 'app-users-list',
@@ -18,18 +18,16 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     TextBoxComponent,
     SelectBoxComponent,
+    DataGridComponent,
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
 })
 export class UsersListComponent {
+  actionTemplate!: TemplateRef<any>;
   searchForm!: FormGroup;
   userList: any;
-  // districts1:any=['Option 1', 'Option 2', 'Option 3']
-  // districts2 = [
-  //   { id: 1, name: 'John' },
-  //   { id: 2, name: 'Jane' },
-  // ];
+
   districts2: any;
 
   constructor(
@@ -43,6 +41,53 @@ export class UsersListComponent {
       selectedDistrict: [''],
     });
   }
+
+  colDefs: any[] = [
+    {
+      field: 'name',
+      headerName: 'Name',
+      filter: true,
+      headerComponentParams: {
+        style: { textAlign: 'center' },
+      },
+      cellStyle: { textAlign: 'center', fontSize: '16px' },
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      headerComponentParams: {
+        style: { textAlign: 'center' },
+      },
+      cellStyle: { textAlign: 'center' },
+      filter: true,
+      cellRenderer: (item: any) => {
+        const status = document.createElement('span');
+        status.innerText = `${item.value}`;
+        if (item.value.toLowerCase() === 'active') {
+          status.classList.add('status-active');
+        } else {
+          status.classList.add('status-inactive');
+        }
+        return status;
+      },
+    },
+    {
+      field: 'action',
+      headerName: 'View',
+      headerComponentParams: {
+        style: { textAlign: 'center' },
+      },
+      cellStyle: { textAlign: 'center' },
+      cellRenderer: (params: any) => {
+        const button = document.createElement('button');
+        button.innerText = 'View Profile';
+        button.classList.add('btn', 'action-button');
+        button.addEventListener('click', () => this.viewUser(params.data));
+        return button;
+      },
+    },
+  ];
+
   ngOnInit() {
     this.getUserData();
     this.getUserById(12);
@@ -58,7 +103,6 @@ export class UsersListComponent {
   }
 
   getUserData() {
-    // console.log('getUserData');
     this.userList = this.userService.getAllUsers();
   }
   getUserById(userId: number) {
@@ -80,13 +124,15 @@ export class UsersListComponent {
   //Search user
   searchUser() {
     console.log('Search Parameters:', this.searchForm.controls['searchName']);
-    // console.log('User List : ', this.userList);
 
     const users = this.userList.filter((user: any) =>
       user.name
         .toLowerCase()
         .includes(this.searchForm.controls['searchName'].value.toLowerCase())
     );
-    // console.log('searched user : ', users);
+  }
+
+  viewUser(user: any) {
+    console.log('Selected User Data:', user);
   }
 }

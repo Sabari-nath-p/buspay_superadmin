@@ -1,4 +1,4 @@
-<div>
+<div class="users-list-container">
   <div class="users-search-container">
     <h2 class="col-6">Users</h2>
     <!-- <div class="search-container"> -->
@@ -22,5 +22,13 @@
     </form>
     <!-- </div> -->
     <!-- </div> -->
+  </div>
+  <div class="users-list">
+    <app-data-grid
+      [rowData]="userList"
+      [colDefs]="colDefs"
+      [pagination]="true"
+      [paginationPageSizeSelector]="[5, 10, 100]"
+    ></app-data-grid>
   </div>
 </div>

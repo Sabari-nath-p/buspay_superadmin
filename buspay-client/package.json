@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "ag-grid-angular": "^33.0.3",
+    "ag-grid-community": "^33.0.3",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "primeicons": "^7.0.0",
