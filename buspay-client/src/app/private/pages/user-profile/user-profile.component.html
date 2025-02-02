@@ -1,0 +1,65 @@
+<div class="user-profile-wrapper">
+  <div class="profile-container">
+    <h2>Owner Profile</h2>
+    <!-- <div class="profile-details"> -->
+    <!-- header Profile image logic-->
+    <div class="profile-section">
+      <div>
+        {{ userDetails.name }}
+      </div>
+      <div class="profile-contact">
+        <span>
+          {{ userDetails.phone }}
+        </span>
+        <span>
+          {{ userDetails.email }}
+        </span>
+        <span>
+          {{ userDetails.website }}
+        </span>
+      </div>
+      <div>
+        {{ userDetails.status }}
+      </div>
+    </div>
+    <div class="address-account-container">
+      <div class="address-section">
+        <div>Address: {{ userDetails.address }}</div>
+        <div>District: {{ userDetails.district }}</div>
+      </div>
+      <div class="account-details">
+        <div>
+          <div class="accno-ifsc">
+            <div>Account Number : {{ userDetails.acc }}</div>
+            <div>IFSC : {{ userDetails.ifsc }}</div>
+          </div>
+          <div class="bank-upi">
+            <div>Bank Name: {{ userDetails.bank_name }}</div>
+            <div>UPI ID: {{ userDetails.upi }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+  </div>
+  <div class="tabs-container">
+    <app-tabs-panel
+      *ngIf="profileTabs"
+      [tabs]="profileTabs"
+      (tabSelected)="onSelectionChanged($event)"
+    ></app-tabs-panel>
+  </div>
+</div>
+
+<ng-template #analyticsTab>
+  <div>Analytics Content</div>
+</ng-template>
+<ng-template #busesTab>
+  <div>buses Content</div>
+</ng-template>
+<ng-template #conductorsTab>
+  <div>conductorsTab Content</div>
+</ng-template>
+<ng-template #settlementsTab>
+  <div>settlementsTab Content</div>
+</ng-template>

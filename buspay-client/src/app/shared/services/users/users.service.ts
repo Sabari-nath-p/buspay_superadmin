@@ -21,11 +21,7 @@ export class UsersService {
   }
 
   getUserById(userId: number) {
-    this.httpClientService.get('user', userId).subscribe((res) => {
-      if (res.statusCode === StatusCode.Success) {
-        // console.log(res.data);
-      }
-    });
+    return this.httpClientService.get('user', userId);
   }
 
   changeUserStatus(userId: number, status: string) {

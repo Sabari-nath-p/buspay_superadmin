@@ -9,6 +9,7 @@ import { SelectBoxComponent } from '../../common-components/select-box/select-bo
 import { DistrictStatesService } from '../../../shared/services/district-state/district-states.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataGridComponent } from '../../common-components/data-grid/data-grid.component';
+import { TabsPanelComponent } from '../../common-components/tabs-panel/tabs-panel.component';
 
 @Component({
   selector: 'app-users-list',
@@ -19,6 +20,7 @@ import { DataGridComponent } from '../../common-components/data-grid/data-grid.c
     TextBoxComponent,
     SelectBoxComponent,
     DataGridComponent,
+    TabsPanelComponent,
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
