@@ -1,0 +1,33 @@
+<div class="login-page-container">
+  <div class="login-page-content">
+    <div class="company-image"></div>
+    <div class="form-container">
+      <div class="company-logo">
+        <!-- img src -->
+        <div class="company-name">BusPay Admin</div>
+      </div>
+      <!-- <ng-container *ngIf="showLoginForm; else registerForm">
+        <app-login-form ></app-login-form>
+      </ng-container> -->
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="row">
+          <div class="col-md-6">
+            <app-text-box
+              [placeholder]="'Email'"
+              formControlName="email"
+            ></app-text-box>
+            <app-text-box
+              [placeholder]="'Password'"
+              formControlName="password"
+            ></app-text-box>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <input type="submit" value="Login" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
