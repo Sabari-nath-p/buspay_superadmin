@@ -1,0 +1,47 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-body">
+      <ul class="timeline">
+        <li *ngFor="let data of timeLineData" class="timeline-item">
+          <div class="timeline-content">
+            <h6>{{ data.place }}</h6>
+
+            <span class="time">
+              <span *ngIf="data.arrivalTime"
+                ><app-icon
+                  [name]="'plane-arrival'"
+                  [title]="'Arrival'"
+                  className="icon-size-16"
+                  ariaHidden="false"
+                  focusable="false"
+                ></app-icon
+              ></span>
+              {{
+                data.arrivalTime
+                  ? data.depatureTime
+                    ? data.arrivalTime + " - " + data.depatureTime
+                    : data.arrivalTime + " - NA"
+                  : data.depatureTime
+                  ? "NA - " + data.depatureTime
+                  : data.time
+                  ? data.time
+                  : "NA"
+              }}
+
+              <span *ngIf="data.depatureTime"
+                ><app-icon
+                  [name]="'plane-depature'"
+                  [title]="'Depature'"
+                  className="icon-size-16"
+                  ariaHidden="false"
+                  focusable="false"
+                ></app-icon
+              ></span>
+            </span>
+          </div>
+          <span class="status">{{ data.status }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

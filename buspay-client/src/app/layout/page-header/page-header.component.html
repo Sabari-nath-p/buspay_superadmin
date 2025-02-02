@@ -1,0 +1,21 @@
+<header class="app-page-header">
+  <div class="header-content">
+    <div>
+      <h2>{{ title }}</h2>
+      <p *ngIf="subHeading" class="sub-heading">{{ subHeading }}</p>
+    </div>
+    <!-- notification section -->
+    <!-- <div class="app-c-notification_blk">
+    </div> -->
+  </div>
+  <div class="user-info">
+    <div class="avatar" *ngIf="userName">
+      <img [src]="userProfileImage" alt="User Avatar" />
+    </div>
+    <div class="vertical-line"></div>
+    <div class="name-designation">
+      <div class="name">{{ userName }}</div>
+      <div class="designation">{{ designation }}</div>
+    </div>
+  </div>
+</header>

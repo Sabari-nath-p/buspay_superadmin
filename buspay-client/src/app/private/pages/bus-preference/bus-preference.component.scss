@@ -1,0 +1,24 @@
+@import "../../../../styles/theme.scss";
+@import "../../../../styles/variables";
+.preference-search-container {
+  background: $white;
+  // background: black;
+  padding-inline: 16px;
+  padding-block: 24px;
+  border-radius: 10px;
+  align-items: center;
+
+  h2 {
+    padding: 0;
+    font-weight: $font-weight-bold;
+  }
+  .search-container {
+    align-items: center;
+
+    button {
+      background: $app-brand-primary;
+      color: $white;
+      outline: none;
+    }
+  }
+}

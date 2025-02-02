@@ -1,0 +1,254 @@
+@import "../../../styles/theme.scss";
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/scrollbar.scss";
+
+$expanded-width: 20%;
+$collapsed-width: 60px;
+$transition-duration: 0.3s;
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: $collapsed-width;
+  min-width: 0px;
+  background-color: $white;
+  color: $text-color;
+  overflow: hidden;
+  border-right: 1px solid $border-color;
+  transition: width $transition-duration ease,
+    min-width $transition-duration ease;
+  z-index: 9;
+
+  .menu-tag {
+    padding: 20px 20px 12px 20px;
+
+    hr {
+      margin: 0 !important;
+      margin-top: 0.1rem !important;
+      opacity: 0.1;
+    }
+  }
+
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color $transition-duration ease;
+    border-bottom: 1px solid $border-color;
+
+    .app-l-brand_logo {
+      height: 30px;
+      width: 100%;
+    }
+
+    &:hover {
+      color: $app-brand-primary;
+    }
+
+    .icon {
+      color: $text-color;
+    }
+    &:hover {
+      color: $app-brand-primary;
+    }
+  }
+
+  .menu-items {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    transition: opacity $transition-duration ease,
+      height $transition-duration ease;
+    opacity: 0;
+    overflow: hidden;
+    overflow-y: auto;
+
+    &.menu--parent {
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 25px 20px;
+        gap: 8px;
+        color: $menu-font-color;
+        cursor: pointer;
+        transition: background-color $transition-duration ease,
+          padding-left $transition-duration ease;
+
+        .icon {
+          color: $menu-icon-color;
+
+          &:hover {
+            color: $app-brand-primary;
+          }
+        }
+
+        .menuTitle {
+          display: block;
+          white-space: nowrap;
+          font-size: 18px;
+          //   font-weight: $font-weight-bold;
+          margin-left: 12px;
+        }
+
+        .icon-expand-menu {
+          margin-left: auto;
+        }
+
+        &:active,
+        &:hover {
+          background: rgba($app-brand-primary, 0.1);
+          .menuTitle {
+            color: $menu-active-font;
+            // font-weight: $font-weight-xlbold;
+          }
+
+          .icon {
+            color: $app-brand-primary;
+          }
+        }
+      }
+    }
+
+    &.menu--child {
+      hr {
+        margin: 0 !important;
+        margin-top: 0.1rem !important;
+        opacity: 0.1;
+      }
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 25px 20px;
+        color: $menu-font-color;
+        cursor: pointer;
+        transition: background-color $transition-duration ease,
+          padding-left $transition-duration ease;
+
+        .icon {
+          color: $menu-icon-color;
+
+          &:hover {
+            color: $app-brand-primary;
+          }
+        }
+
+        .menuTitle {
+          display: block;
+          white-space: nowrap;
+          font-size: 18px;
+          //   font-weight: $font-weight-bold;
+          margin-left: 12px;
+        }
+
+        .icon-expand-menu {
+          margin-left: auto;
+        }
+
+        &:active,
+        &:hover {
+          background: transparent;
+          //   .menuTitle {
+          //     font-weight: $font-weight-xlbold;
+          //   }
+          .icon {
+            color: $app-brand-primary;
+          }
+        }
+      }
+    }
+
+    .menu-item {
+      max-height: 0px;
+      transition: max-height $transition-duration ease;
+
+      &.isOpen {
+        max-height: 1000px;
+        .menu-item {
+          padding: 8px 20px;
+        }
+        .menu-items {
+          margin-left: 52px;
+          border-left: 1px solid $menu-icon-color;
+          padding: 0px 14px;
+          max-height: 0px;
+          transition: max-height $transition-duration ease;
+
+          &.isOpen {
+            max-height: 1000px;
+          }
+          .menu-item {
+            padding: 8px 6px;
+
+            .icon {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.expanded {
+    width: $expanded-width;
+    min-width: 310px;
+    box-shadow: 0px 0 28px -13px $menu-box-shadow;
+
+    .menu-items {
+      @include custom-scrollbar(15px);
+      opacity: 1;
+    }
+    .icon-expand-menu {
+      margin-left: auto;
+    }
+  }
+  &.collapsed {
+    .menu-items {
+      @include custom-scrollbar(5px);
+      opacity: 1;
+
+      .app-l-brand_logo {
+        height: 30px;
+        width: 100%;
+      }
+
+      .menuTitle {
+        opacity: 0;
+        display: none !important;
+      }
+
+      .menu-items {
+        display: none;
+      }
+    }
+    .menu-item {
+      padding: 10px;
+    }
+
+    .menuTitle,
+    .icon-expand-menu {
+      display: none;
+    }
+  }
+}
+
+li,
+ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.side-menu {
+  ul.menu-items {
+    height: calc(100% - 60px);
+    overflow-y: auto;
+
+    .menu-items {
+      height: auto;
+    }
+  }
+}
