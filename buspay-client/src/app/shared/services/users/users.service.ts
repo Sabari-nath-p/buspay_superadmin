@@ -15,7 +15,6 @@ export class UsersService {
   getAllUsers() {
     this.httpClientService.get('user').subscribe((res) => {
       if (res.statusCode === StatusCode.Success) {
-        // console.log('GET all users', res.data);
         this.usersData.next(res.data);
       }
     });
@@ -24,7 +23,7 @@ export class UsersService {
   getUserById(userId: number) {
     this.httpClientService.get('user', userId).subscribe((res) => {
       if (res.statusCode === StatusCode.Success) {
-        console.log(res.data);
+        // console.log(res.data);
       }
     });
   }
