@@ -13,7 +13,7 @@
       <app-select-box
         class=""
         formControlName="selectedDistrict"
-        [dataSource]="districts2"
+        [dataSource]="districts"
         valueExpression="id"
         displayExpression="name"
         [placeholder]="'Select district..'"
@@ -25,7 +25,7 @@
   </div>
   <div class="users-list">
     <app-data-grid
-      [rowData]="userList"
+      [rowData]="gridData"
       [colDefs]="colDefs"
       [pagination]="true"
       [paginationPageSizeSelector]="[5, 10, 100]"

@@ -27,8 +27,9 @@ export class UsersListComponent {
   actionTemplate!: TemplateRef<any>;
   searchForm!: FormGroup;
   userList: any;
+  gridData: any;
 
-  districts2: any;
+  districts: any;
 
   constructor(
     private fb: FormBuilder,
@@ -90,16 +91,23 @@ export class UsersListComponent {
 
   ngOnInit() {
     this.getUserData();
+    this.userService.usersList$.subscribe((users) => {
+      // console.log("UserList : ",users)
+      this.userList = users;
+      this.gridData = users;
+    });
     this.getUserById(12);
     this.changeUserStatus(12, UserStatus.ACTIVE);
     this.getAllSettlementRequests();
     this.getAllDistricts();
     this.districtService.districts$.subscribe((res) => {
-      this.districts2 = res;
+      this.districts = res;
     });
-    this.userService.usersList$.subscribe((users) => {
-      this.userList = users;
-    });
+    this.initializeGridData();
+  }
+
+  initializeGridData() {
+    this.gridData = this.userList;
   }
 
   getUserData() {
@@ -123,13 +131,15 @@ export class UsersListComponent {
 
   //Search user
   searchUser() {
-    console.log('Search Parameters:', this.searchForm.controls['searchName']);
-
-    const users = this.userList.filter((user: any) =>
-      user.name
-        .toLowerCase()
-        .includes(this.searchForm.controls['searchName'].value.toLowerCase())
-    );
+    if (this.searchForm.value.searchName.length > 0) {
+      this.gridData = this.userList.filter((user: any) =>
+        user.name
+          .toLowerCase()
+          .includes(this.searchForm.value.searchName.toLowerCase())
+      );
+    } else {
+      this.initializeGridData();
+    }
   }
 
   viewUser(user: any) {
