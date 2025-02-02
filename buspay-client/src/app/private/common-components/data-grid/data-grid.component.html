@@ -1,0 +1,12 @@
+<button *ngIf="isExported" (click)="onExportClick()">{{ exportLabel }}</button>
+<ag-grid-angular
+  class="ag-theme-quartz"
+  style="height: 500px"
+  [rowData]="rowData"
+  [gridOptions]="{ theme: 'legacy' }"
+  [columnDefs]="colDefs"
+  [defaultColDef]="defaultColDef"
+  [pagination]="pagination"
+  [paginationPageSizeSelector]="paginationPageSizeSelector"
+  (gridReady)="onGridReady($event)"
+/>
