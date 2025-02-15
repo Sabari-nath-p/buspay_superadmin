@@ -31,6 +31,7 @@ export class CommonModalComponent {
         this.content = config.content;
         this.isHeaderRequired = config.isHeaderRequired;
         this.isFooterRequired = config.isFooterRequired;
+        this.setModalDimensions(config.width, config.height);
         this.showModal();
       } else {
         this.hideModal();
@@ -51,4 +52,29 @@ export class CommonModalComponent {
       modal.style.display = 'none';
     }
   }
+
+  setModalDimensions(width?: string, height?: string) {
+    if (this.commonModal?.nativeElement) {
+      const modalDialog = this.commonModal.nativeElement.querySelector('.modal-dialog');
+      const modalContent = this.commonModal.nativeElement.querySelector('.modal-content');
+      
+      if (width) {
+        modalDialog.style.maxWidth = width;
+        modalDialog.style.width = width;
+      }
+      
+      if (height) {
+        modalContent.style.height = height;
+        // Make modal body take remaining height
+        const modalBody = modalContent.querySelector('.modal-body');
+        if (modalBody) {
+          modalBody.style.height = 'calc(100% - ' + 
+            (this.isHeaderRequired ? '56px' : '0px') + ' - ' + 
+            (this.isFooterRequired ? '57px' : '0px') + ')';
+          modalBody.style.overflowY = 'auto';
+        }
+      }
+    }
+  }
+
 }

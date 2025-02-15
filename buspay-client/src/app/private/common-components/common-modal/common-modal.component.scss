@@ -1,3 +1,17 @@
 .modal {
   background-color: rgba(0, 0, 0, 0.5);
+
+  .modal-dialog {
+    transition: max-width 0.3s ease-in-out;
+  }
+
+  .modal-content {
+    transition: height 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-body {
+    transition: height 0.3s ease-in-out;
+  }
 }
