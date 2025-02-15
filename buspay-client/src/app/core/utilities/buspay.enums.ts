@@ -42,3 +42,8 @@ export enum SettleStatus {
   REJECTED = 'rejected',
   APPROVED = 'approved',
 }
+
+export enum ProfileParent{
+  USERLIST = 'userList',
+  SETTLEMENT = 'settlement'
+}

@@ -3,9 +3,13 @@
     <!-- <h2>Owner Profile</h2> -->
     <!-- <div class="profile-details"> -->
     <!-- header Profile image logic-->
+    <div class="user-info"></div>
     <div class="profile-section">
-      <div>
-        {{ userDetails.name }}
+      <div class="avatar" *ngIf="userDetails.name">
+        <img [src]="userProfileImage" alt="User Avatar" />
+        <span>
+          {{ userDetails.name }}
+        </span>
       </div>
       <div class="profile-contact">
         <span>
@@ -19,7 +23,10 @@
         </span>
       </div>
       <div>
-        {{ userDetails.status }}
+        <span *ngIf="parentScreen == Parent.USERLIST">
+          {{ userDetails.status }}</span
+        >
+        <span *ngIf="parentScreen == Parent.SETTLEMENT">Pending</span>
       </div>
     </div>
     <div class="address-account-container">
@@ -42,12 +49,19 @@
     </div>
     <!-- </div> -->
   </div>
-  <div class="tabs-container">
+  <div class="tabs-container" *ngIf="parentScreen == Parent.USERLIST">
     <app-tabs-panel
       *ngIf="profileTabs"
       [tabs]="profileTabs"
       (tabSelected)="onSelectionChanged($event)"
     ></app-tabs-panel>
+  </div>
+  <div *ngIf="parentScreen == Parent.SETTLEMENT">
+    <hr />
+    <div class="action-buttons">
+      <button type="button" class="btn btn-secondary">Decline</button>
+      <button type="button" class="btn btn-primary">Approve</button>
+    </div>
   </div>
 </div>
 

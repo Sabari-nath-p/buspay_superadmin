@@ -245,7 +245,7 @@ export class UsersListComponent {
         content: this.userProfile,
         isHeaderRequired: true,
         isFooterRequired: true,
-        width: ModalSize.FULL_WIDTH,
+        width: ModalSize.EXTRA_LARGE,
         height: ModalSize.FULL_HEIGHT,
       });
     }, 200);

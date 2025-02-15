@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from '../../core/guards/authentication/authentication.service';
+import { AvatarService } from '../../shared/services/avatar.service';
 
 @Component({
   selector: 'app-page-header',
@@ -22,7 +23,8 @@ export class PageHeaderComponent {
     private sanitizer: DomSanitizer,
     // private headerService: HeaderService,
     // private masterService: MasterDataService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private avatarsService: AvatarService
   ) {}
 
   ngOnInit(): void {
@@ -47,43 +49,8 @@ export class PageHeaderComponent {
   getProfilePicture(): void {
     // Add API for getting profile picture.
     // if no profile picture is available
-    this.userProfileImage = this.getAvatarWithInitials();
-  }
-
-  getAvatarWithInitials() {
-    let name = this.userName.split(' ');
-    let canvas = document.createElement('canvas');
-    canvas.style.display = 'none';
-    canvas.width = 32;
-    canvas.height = 32;
-    document.body.appendChild(canvas);
-    let context = canvas.getContext('2d');
-    if (!context) {
-      return false;
-    }
-    context.fillStyle = '#22C55E';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.font = '16px Arial';
-    context.fillStyle = '#fff';
-
-    let first, last;
-    if (name && name.length > 0 && name[0] != '') {
-      first = name[0].charAt(0);
-      last =
-        name && name.length > 1 && name[1] != '' ? name[1].charAt(0) : null;
-
-      if (last) {
-        let initials = first + last;
-        context.fillText(initials.toUpperCase(), 4, 22);
-      } else {
-        let initials = first;
-        context.fillText(initials.toUpperCase(), 10, 22);
-      }
-      let data = canvas.toDataURL();
-      document.body.removeChild(canvas);
-      return data;
-    } else {
-      return false;
-    }
+    this.userProfileImage = this.avatarsService.getAvatarWithInitials(
+      this.userName
+    );
   }
 }

@@ -10,7 +10,11 @@ import {
 import { TabItem } from '../../../shared/models/tabs-panel.model';
 import { TabsPanelComponent } from '../../common-components/tabs-panel/tabs-panel.component';
 import { UsersService } from '../../../shared/services/users/users.service';
-import { StatusCode } from '../../../core/utilities/buspay.enums';
+import {
+  ProfileParent,
+  StatusCode,
+} from '../../../core/utilities/buspay.enums';
+import { AvatarService } from '../../../shared/services/avatar.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,8 +25,8 @@ import { StatusCode } from '../../../core/utilities/buspay.enums';
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class UserProfileComponent {
-
-  @Input() userDetails:any
+  @Input() userDetails: any;
+  @Input() parentScreen: string = '';
 
   @ViewChild('analyticsTab', { static: false })
   analyticsTab!: TemplateRef<any>;
@@ -36,14 +40,18 @@ export class UserProfileComponent {
   profileTabs: TabItem[] | null = null;
   currentTab!: any;
   // userDetails!: any;
+  Parent = ProfileParent;
+  userProfileImage!: any;
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private userService: UsersService
+    private userService: UsersService,
+    private avatarsService: AvatarService
   ) {}
-  // ngOnInit(): void {
-  //   this.getUserDetailsById(1);
-  // }
+  ngOnInit(): void {
+    //this.getUserDetailsById(1);
+    this.getUserProfileImage();
+  }
 
   ngAfterViewInit(): void {
     this.profileTabs = [
@@ -71,5 +79,13 @@ export class UserProfileComponent {
   onSelectionChanged(event: any) {
     console.log(event);
     this.currentTab = event;
+  }
+
+  getUserProfileImage() {
+    if (this.userDetails && this.userDetails.name) {
+      this.userProfileImage = this.avatarsService.getAvatarWithInitials(
+        this.userDetails.name
+      );
+    }
   }
 }
