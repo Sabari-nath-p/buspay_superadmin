@@ -9,6 +9,10 @@ import { CommonModule } from '@angular/common';
 import { DataGridComponent } from '../../common-components/data-grid/data-grid.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GridActionCellRendererComponent } from '../../common-components/grid-action-cell-renderer/grid-action-cell-renderer.component';
+import { CommonModalService } from '../../common-components/common-modal/common-modal.service';
+import { ModalSize } from '../../../shared/models/common-modal.model';
+import { CommonModalComponent } from '../../common-components/common-modal/common-modal.component';
+import { AddEditBustypeComponent } from './add-edit-bustype/add-edit-bustype.component';
 
 @Component({
   selector: 'app-bus-type',
@@ -18,12 +22,20 @@ import { GridActionCellRendererComponent } from '../../common-components/grid-ac
     CommonModule,
     DataGridComponent,
     ReactiveFormsModule,
+    CommonModalComponent,
+    AddEditBustypeComponent,
   ],
   templateUrl: './bus-type.component.html',
   styleUrl: './bus-type.component.scss',
 })
 export class BusTypeComponent {
+  @ViewChild('addBusTypeTemplate', { static: false })
+  addBusTypeTemplate!: TemplateRef<any>;
+  @ViewChild('editBusTypeTemplate', { static: false })
+  editBusTypeTemplate!: TemplateRef<any>;
+
   searchForm!: FormGroup;
+  selectedBusType!: any;
 
   //sampleData
   busTypeList: any = [
@@ -66,7 +78,11 @@ export class BusTypeComponent {
 
   gridData!: any;
 
-  constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder) {
+  constructor(
+    private cdRef: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private modalService: CommonModalService
+  ) {
     this.searchForm = this.fb.group({
       searchName: [''],
     });
@@ -143,8 +159,33 @@ export class BusTypeComponent {
     // this.busTypeList = this.busService.getBusTypeList()
   }
 
+  addBusType() {
+    this.cdRef.detectChanges();
+    setTimeout(() => {
+      this.modalService.showModal({
+        heading: 'CREATE TYPE',
+        content: this.addBusTypeTemplate,
+        isHeaderRequired: true,
+        isFooterRequired: true,
+        width: ModalSize.MEDIUM,
+        height: ModalSize.MEDIUM,
+      });
+    }, 200);
+  }
+
   editBusType(data: any): void {
-    console.log('Edit :', data);
+    this.selectedBusType = data;
+    this.cdRef.detectChanges();
+    setTimeout(() => {
+      this.modalService.showModal({
+        heading: 'EDIT TYPE',
+        content: this.editBusTypeTemplate,
+        isHeaderRequired: true,
+        isFooterRequired: true,
+        width: ModalSize.MEDIUM,
+        height: ModalSize.MEDIUM,
+      });
+    }, 200);
   }
   deleteBusType(data: any): void {
     console.log('Delete :', data);
