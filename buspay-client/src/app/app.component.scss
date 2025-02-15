@@ -1,0 +1,33 @@
+
+::ng-deep .ag-theme-quartz,
+.ag-theme-quartz-dark,
+.ag-theme-quartz-auto-dark {
+  --ag-grid-size: 10px;
+}
+
+::ng-deep .ag-header-cell-sortable .ag-header-cell-label {
+  display: flex;
+  text-align: center !important;
+  justify-content: center !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .status-inactive {
+  background-color: #fcdede;
+  color: #e14949;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  text-transform: uppercase !important;
+}
+
+::ng-deep .status-active {
+  background-color: #fffbeb;
+  color: #f6a723;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  text-transform: uppercase !important;
+}

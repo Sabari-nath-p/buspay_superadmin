@@ -1,0 +1,30 @@
+<div>
+  <button
+    *ngIf="isEditable"
+    class="btn btn-link p-0"
+    title="Edit"
+    (click)="edit()"
+  >
+    <app-icon
+      [name]="'edit'"
+      [title]="'Edit'"
+      className="icon-size-43"
+      ariaHidden="false"
+      focusable="false"
+    ></app-icon>
+  </button>
+  <button
+    *ngIf="isDeletable"
+    class="btn btn-link p-0"
+    title="Delete"
+    (click)="delete()"
+  >
+    <app-icon
+      [name]="'delete'"
+      [title]="'Delete'"
+      className="icon-size-45"
+      ariaHidden="false"
+      focusable="false"
+    ></app-icon>
+  </button>
+</div>
