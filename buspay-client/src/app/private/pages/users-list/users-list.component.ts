@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { ViewProfileComponent } from '../view-profile/view-profile.component';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../shared/services/users/users.service';
@@ -13,6 +18,7 @@ import { TabsPanelComponent } from '../../common-components/tabs-panel/tabs-pane
 import { CommonModalComponent } from '../../common-components/common-modal/common-modal.component';
 import { CommonModalService } from '../../common-components/common-modal/common-modal.service';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { ModalSize } from '../../../shared/models/common-modal.model';
 
 @Component({
   selector: 'app-users-list',
@@ -25,7 +31,7 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
     DataGridComponent,
     TabsPanelComponent,
     CommonModalComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
@@ -239,7 +245,9 @@ export class UsersListComponent {
         content: this.userProfile,
         isHeaderRequired: true,
         isFooterRequired: true,
+        width: ModalSize.FULL_WIDTH,
+        height: ModalSize.FULL_HEIGHT,
       });
-    },200)
+    }, 200);
   }
 }
