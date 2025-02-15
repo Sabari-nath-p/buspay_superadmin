@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, TemplateRef, ViewChild } from '@angular/core';
 import { ViewProfileComponent } from '../view-profile/view-profile.component';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../shared/services/users/users.service';
@@ -10,6 +10,9 @@ import { DistrictStatesService } from '../../../shared/services/district-state/d
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataGridComponent } from '../../common-components/data-grid/data-grid.component';
 import { TabsPanelComponent } from '../../common-components/tabs-panel/tabs-panel.component';
+import { CommonModalComponent } from '../../common-components/common-modal/common-modal.component';
+import { CommonModalService } from '../../common-components/common-modal/common-modal.service';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
   selector: 'app-users-list',
@@ -21,23 +24,103 @@ import { TabsPanelComponent } from '../../common-components/tabs-panel/tabs-pane
     SelectBoxComponent,
     DataGridComponent,
     TabsPanelComponent,
+    CommonModalComponent,
+    UserProfileComponent
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
 })
 export class UsersListComponent {
+  @ViewChild('userProfile', { static: false })
+  userProfile!: TemplateRef<any>;
   actionTemplate!: TemplateRef<any>;
   searchForm!: FormGroup;
-  userList: any;
+  selectedUser!: any;
+
+  //sample data
+  userList: any = [
+    {
+      id: 1,
+      name: 'Harikrishnan KB',
+      phone: '+91 9876543210',
+      email: 'hari@buspay.com',
+      website: 'www.buspay.com',
+      status: 'Active',
+      address: '123, Tech Park Road, Infopark',
+      district: 'Kochi',
+      acc: '1234567890123456',
+      ifsc: 'SBIN0001234',
+      bank_name: 'State Bank of India',
+      upi: 'hari@upi',
+    },
+    {
+      id: 2,
+      name: 'Amit Verma',
+      phone: '+91 9876543211',
+      email: 'amit@buspay.com',
+      website: 'www.amitbus.com',
+      status: 'Inactive',
+      address: '456, Cyber Hub, Gurgaon',
+      district: 'Gurgaon',
+      acc: '7894561230123456',
+      ifsc: 'HDFC0005678',
+      bank_name: 'HDFC Bank',
+      upi: 'amit@hdfc',
+    },
+    {
+      id: 3,
+      name: 'Sneha Raj',
+      phone: '+91 9876543212',
+      email: 'sneha@buspay.com',
+      website: 'www.snehatravels.com',
+      status: 'Active',
+      address: '789, Tech Valley, Bengaluru',
+      district: 'Bangalore',
+      acc: '3216549870123456',
+      ifsc: 'ICIC0009876',
+      bank_name: 'ICICI Bank',
+      upi: 'sneha@icici',
+    },
+    {
+      id: 4,
+      name: 'Rahul Sharma',
+      phone: '+91 9876543213',
+      email: 'rahul@buspay.com',
+      website: 'www.rahulbus.com',
+      status: 'Active',
+      address: '101, Whitefield, Bengaluru',
+      district: 'Bangalore',
+      acc: '9876543210123456',
+      ifsc: 'AXIS0001122',
+      bank_name: 'Axis Bank',
+      upi: 'rahul@axis',
+    },
+    {
+      id: 5,
+      name: 'Priya Menon',
+      phone: '+91 9876543214',
+      email: 'priya@buspay.com',
+      website: 'www.priyatravels.com',
+      status: 'Inactive',
+      address: '202, Marine Drive, Mumbai',
+      district: 'Mumbai',
+      acc: '6541239870123456',
+      ifsc: 'KKBK0004321',
+      bank_name: 'Kotak Mahindra Bank',
+      upi: 'priya@kotak',
+    },
+  ];
   gridData: any;
 
   districts: any;
 
   constructor(
+    private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
     private userService: UsersService,
     private settlementService: SettlementService,
-    private districtService: DistrictStatesService
+    private districtService: DistrictStatesService,
+    private modalService: CommonModalService
   ) {
     this.searchForm = this.fb.group({
       searchName: [''],
@@ -92,19 +175,19 @@ export class UsersListComponent {
   ];
 
   ngOnInit() {
-    this.getUserData();
-    this.userService.usersList$.subscribe((users) => {
-      // console.log("UserList : ",users)
-      this.userList = users;
-      this.gridData = users;
-    });
-    this.getUserById(12);
-    this.changeUserStatus(12, UserStatus.ACTIVE);
-    this.getAllSettlementRequests();
-    this.getAllDistricts();
-    this.districtService.districts$.subscribe((res) => {
-      this.districts = res;
-    });
+    // this.getUserData();
+    // this.userService.usersList$.subscribe((users) => {
+    //   // console.log("UserList : ",users)
+    //   this.userList = users;
+    //   this.gridData = users;
+    // });
+    // this.getUserById(12);
+    // this.changeUserStatus(12, UserStatus.ACTIVE);
+    // this.getAllSettlementRequests();
+    // this.getAllDistricts();
+    // this.districtService.districts$.subscribe((res) => {
+    //   this.districts = res;
+    // });
     this.initializeGridData();
   }
 
@@ -146,5 +229,17 @@ export class UsersListComponent {
 
   viewUser(user: any) {
     console.log('Selected User Data:', user);
+    // const templateContent = this.userProfile;
+    this.selectedUser = user;
+    this.cdRef.detectChanges();
+
+    setTimeout(() => {
+      this.modalService.showModal({
+        heading: 'User Profile',
+        content: this.userProfile,
+        isHeaderRequired: true,
+        isFooterRequired: true,
+      });
+    },200)
   }
 }

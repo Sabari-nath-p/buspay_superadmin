@@ -23,8 +23,8 @@ export class CommonModalService {
     this.modalConfig.next({
       heading: config.heading,
       content: config.content,
-      isHeaderRequired: config.isHeaderRequired ?? true,
-      isFooterRequired: config.isFooterRequired ?? true,
+      isHeaderRequired: config.isHeaderRequired ? true : false,
+      isFooterRequired: config.isFooterRequired ? true : false,
     });
   }
 

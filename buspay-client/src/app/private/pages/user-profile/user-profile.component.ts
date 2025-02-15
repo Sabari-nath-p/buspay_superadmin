@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
+  Input,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +21,9 @@ import { StatusCode } from '../../../core/utilities/buspay.enums';
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class UserProfileComponent {
+
+  @Input() userDetails:any
+
   @ViewChild('analyticsTab', { static: false })
   analyticsTab!: TemplateRef<any>;
   @ViewChild('busesTab', { static: false })
@@ -31,15 +35,15 @@ export class UserProfileComponent {
 
   profileTabs: TabItem[] | null = null;
   currentTab!: any;
-  userDetails!: any;
+  // userDetails!: any;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private userService: UsersService
   ) {}
-  ngOnInit(): void {
-    this.getUserDetailsById(1);
-  }
+  // ngOnInit(): void {
+  //   this.getUserDetailsById(1);
+  // }
 
   ngAfterViewInit(): void {
     this.profileTabs = [
@@ -58,7 +62,7 @@ export class UserProfileComponent {
   getUserDetailsById(userId: number) {
     this.userService.getUserById(userId).subscribe((res) => {
       if (res.statusCode === StatusCode.Success) {
-        console.log('User : ', res.data);
+        //console.log('User : ', res.data);
         this.userDetails = res.data;
       }
     });

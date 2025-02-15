@@ -32,3 +32,21 @@
     ></app-data-grid>
   </div>
 </div>
+
+<app-common-modal
+  [isHeaderRequired]="true"
+  [isFooterRequired]="true"
+  [content]="userProfile"
+  [heading]="selectedUser ? selectedUser.name : 'User Profile'"
+></app-common-modal>
+<ng-template #userProfile>
+  <app-user-profile
+    *ngIf="selectedUser"
+    [userDetails]="selectedUser"
+  ></app-user-profile>
+</ng-template>
+
+<app-user-profile
+  *ngIf="selectedUser"
+  [userDetails]="selectedUser"
+></app-user-profile>
