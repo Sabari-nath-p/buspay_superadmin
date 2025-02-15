@@ -4,19 +4,17 @@
     <!-- <div class="col-6 search-container">
       <div class="row" > -->
     <form class="search-container" [formGroup]="searchForm">
-        <app-text-box
+      <app-text-box
         class=""
         formControlName="searchName"
         [iconClass]="'pi pi-search'"
         [placeholder]="'Search by name..'"
         (onValueChanged)="onValueChange($event)"
-        />
-        <button class="btn">ADD</button>
+      />
+      <button class="btn" (click)="addBusType()">ADD</button>
     </form>
-      <!-- </div>
+    <!-- </div>
     </div> -->
-    
-    
   </div>
   <div class="bustype-list">
     <app-data-grid
@@ -27,3 +25,20 @@
     ></app-data-grid>
   </div>
 </div>
+
+<app-common-modal
+  [isHeaderRequired]="true"
+  [isFooterRequired]="true"
+  [content]="addBusTypeTemplate"
+></app-common-modal>
+
+<ng-template #addBusTypeTemplate>
+  <app-add-edit-bustype></app-add-edit-bustype>
+</ng-template>
+
+<ng-template #editBusTypeTemplate>
+  <app-add-edit-bustype
+    [formData]="selectedBusType"
+    [isEdit]="true"
+  ></app-add-edit-bustype>
+</ng-template>
