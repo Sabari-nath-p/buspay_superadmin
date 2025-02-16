@@ -10,7 +10,10 @@ import { DataGridComponent } from '../../common-components/data-grid/data-grid.c
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GridActionCellRendererComponent } from '../../common-components/grid-action-cell-renderer/grid-action-cell-renderer.component';
 import { CommonModalService } from '../../common-components/common-modal/common-modal.service';
-import { ModalSize } from '../../../shared/models/common-modal.model';
+import {
+  ModalButton,
+  ModalSize,
+} from '../../../shared/models/common-modal.model';
 import { CommonModalComponent } from '../../common-components/common-modal/common-modal.component';
 import { AddEditBustypeComponent } from './add-edit-bustype/add-edit-bustype.component';
 
@@ -36,6 +39,27 @@ export class BusTypeComponent {
 
   searchForm!: FormGroup;
   selectedBusType!: any;
+
+  modalEditButton: ModalButton[] = [
+    // {
+    //   label: 'Close',
+    //   class: 'btn btn-danger',
+    //   callback: () => this.modalService.hideModal(),
+    // },
+    {
+      label: 'Edit',
+      class: 'btn btn-primary',
+      callback: () => this.onEditButtonClicked(),
+    },
+  ];
+
+  modalAddButton: ModalButton[] = [
+    {
+      label: 'Add',
+      class: 'btn btn-primary',
+      callback: () => this.onAddButtonClicked(),
+    },
+  ];
 
   //sampleData
   busTypeList: any = [
@@ -169,6 +193,7 @@ export class BusTypeComponent {
         isFooterRequired: true,
         width: ModalSize.MEDIUM,
         height: ModalSize.MEDIUM,
+        buttons: this.modalAddButton,
       });
     }, 200);
   }
@@ -184,6 +209,7 @@ export class BusTypeComponent {
         isFooterRequired: true,
         width: ModalSize.MEDIUM,
         height: ModalSize.MEDIUM,
+        buttons: this.modalEditButton,
       });
     }, 200);
   }
@@ -203,5 +229,12 @@ export class BusTypeComponent {
     } else {
       this.initializeGridData();
     }
+  }
+
+  onAddButtonClicked(): void {
+    console.log('Add');
+  }
+  onEditButtonClicked(): void {
+    console.log('Edit edit');
   }
 }

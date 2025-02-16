@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { ModalButton } from '../../../shared/models/common-modal.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class CommonModalService {
     isFooterRequired: boolean;
     width?: string;
     height?: string;
+    buttons?: ModalButton[];
   } | null>(null);
 
   modalConfig$ = this.modalConfig.asObservable();
@@ -23,6 +25,7 @@ export class CommonModalService {
     isFooterRequired?: boolean;
     width?: string;
     height?: string;
+    buttons?: ModalButton[];
   }) {
     this.modalConfig.next({
       heading: config.heading,
@@ -30,7 +33,8 @@ export class CommonModalService {
       isHeaderRequired: config.isHeaderRequired ? true : false,
       isFooterRequired: config.isFooterRequired ? true : false,
       width: config.width,
-      height: config.height
+      height: config.height,
+      buttons: config.buttons ?? [],
     });
   }
 

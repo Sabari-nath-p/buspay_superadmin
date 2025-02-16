@@ -2,11 +2,14 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { CommonModalService } from './common-modal.service';
+import { ModalButton } from '../../../shared/models/common-modal.model';
 
 @Component({
   selector: 'app-common-modal',
@@ -21,6 +24,10 @@ export class CommonModalComponent {
   @Input() isFooterRequired: boolean = true;
   @Input() heading: string = '';
   @Input() content: any;
+  @Input() buttons: ModalButton[] = [];
+
+  @Output() buttonClick = new EventEmitter<string>();
+  
 
   constructor(private modalService: CommonModalService) {}
 
@@ -32,6 +39,7 @@ export class CommonModalComponent {
         this.isHeaderRequired = config.isHeaderRequired;
         this.isFooterRequired = config.isFooterRequired;
         this.setModalDimensions(config.width, config.height);
+        this.buttons = config.buttons ?? [];
         this.showModal();
       } else {
         this.hideModal();
@@ -75,6 +83,13 @@ export class CommonModalComponent {
         }
       }
     }
+  }
+
+  onButtonClick(button: ModalButton) {
+    if (button.callback) {
+      button.callback();
+    }
+    this.buttonClick.emit(button.label);
   }
 
 }
