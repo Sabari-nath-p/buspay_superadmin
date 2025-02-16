@@ -1,0 +1,20 @@
+<div class="modal fade show d-block" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center font-weight-bold">{{ title }}</h5>
+      </div>
+      <div class="modal-body text-center">
+        {{ message }}
+      </div>
+      <div class="modal-footer p-0">
+        <button type="button" class="btn btn-secondary" (click)="close(false)">
+          {{ btnCancelText }}
+        </button>
+        <button type="button" class="btn btn-danger" (click)="close(true)">
+          {{ btnOkText }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

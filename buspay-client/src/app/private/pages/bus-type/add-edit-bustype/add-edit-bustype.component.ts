@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { TextBoxComponent } from '../../../common-components/text-box/text-box.component';
 import { CommonModalService } from '../../../common-components/common-modal/common-modal.service';
 
@@ -22,10 +27,10 @@ export class AddEditBustypeComponent {
     private modalService: CommonModalService
   ) {
     this.busTypeForm = this.fb.group({
-      busType: [''],
-      fareKm: [],
-      minCharge: [],
-      farePerKm: [],
+      busType: ['', Validators.required],
+      fareKm: [, Validators.required],
+      minCharge: [, Validators.required],
+      farePerKm: [, Validators.required],
     });
   }
 
@@ -64,13 +69,13 @@ export class AddEditBustypeComponent {
 
   addBustype(): void {
     if (this.busTypeForm.valid) {
-      console.log('valid : ' , this.busTypeForm.value);
+      console.log('valid : ', this.busTypeForm.value);
     }
   }
 
   editBustype(): void {
     if (this.busTypeForm.valid) {
-      console.log('valid : ' ,this.busTypeForm.value);
+      console.log('valid : ', this.busTypeForm.value);
     }
   }
 }

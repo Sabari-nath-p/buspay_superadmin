@@ -16,6 +16,7 @@ import {
 } from '../../../shared/models/common-modal.model';
 import { CommonModalComponent } from '../../common-components/common-modal/common-modal.component';
 import { AddEditBustypeComponent } from './add-edit-bustype/add-edit-bustype.component';
+import { AlertConfirmService } from '../../common-components/alert-confirm/alert-confirm.service';
 
 @Component({
   selector: 'app-bus-type',
@@ -111,7 +112,8 @@ export class BusTypeComponent {
   constructor(
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
-    private modalService: CommonModalService
+    private modalService: CommonModalService,
+    private alertConfirmService: AlertConfirmService
   ) {
     this.searchForm = this.fb.group({
       searchName: [''],
@@ -219,7 +221,23 @@ export class BusTypeComponent {
       });
     }, 200);
   }
+
   deleteBusType(data: any): void {
+    this.alertConfirmService
+      .confirm(
+        'Confirmation',
+        'Are you sure you want to delete this item?',
+        'Yes',
+        'Cancel'
+      )
+      .then((isConfirmed: boolean) => {
+        if (isConfirmed) {
+          this.confirmDelete(data);
+        }
+      });
+  }
+
+  confirmDelete(data: any): void {
     console.log('Delete :', data);
   }
 
@@ -231,10 +249,8 @@ export class BusTypeComponent {
           .toLowerCase()
           .includes(this.searchForm.value.searchName.toLowerCase())
       );
-      console.log('filer : ', this.gridData);
     } else {
       this.initializeGridData();
     }
   }
-
 }
