@@ -6,6 +6,18 @@ import { ModalButton } from '../../../shared/models/common-modal.model';
   providedIn: 'root',
 })
 export class CommonModalService {
+
+  private modalButtonClickSource = new BehaviorSubject<any>(null);
+  modalButtonClick$ = this.modalButtonClickSource.asObservable();
+
+  emitButtonClick(id: string) {
+    this.modalButtonClickSource.next(id);
+
+    // setTimeout(() => {
+    //   this.modalButtonClickSource.next('');
+    // }, 100);
+  }
+
   private modalConfig = new BehaviorSubject<{
     heading: string;
     content: any;

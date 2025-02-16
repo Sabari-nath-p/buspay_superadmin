@@ -8,6 +8,7 @@ export enum ModalSize {
 }
 
 export interface ModalButton {
+  id: string;
   label: string;
   class?: string;
   callback?: () => void;

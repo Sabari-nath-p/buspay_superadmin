@@ -47,17 +47,23 @@ export class BusTypeComponent {
     //   callback: () => this.modalService.hideModal(),
     // },
     {
+      id: 'edit',
       label: 'Edit',
       class: 'btn btn-primary',
-      callback: () => this.onEditButtonClicked(),
+      callback: () => {
+        this.modalService.emitButtonClick('edit');
+      },
     },
   ];
 
   modalAddButton: ModalButton[] = [
     {
+      id: 'add',
       label: 'Add',
       class: 'btn btn-primary',
-      callback: () => this.onAddButtonClicked(),
+      callback: () => {
+        this.modalService.emitButtonClick('add');
+      },
     },
   ];
 
@@ -231,10 +237,4 @@ export class BusTypeComponent {
     }
   }
 
-  onAddButtonClicked(): void {
-    console.log('Add');
-  }
-  onEditButtonClicked(): void {
-    console.log('Edit edit');
-  }
 }

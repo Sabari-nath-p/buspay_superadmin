@@ -89,7 +89,6 @@ export class CommonModalComponent {
     if (button.callback) {
       button.callback();
     }
-    this.buttonClick.emit(button.label);
   }
 
 }
