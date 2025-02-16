@@ -28,9 +28,9 @@ export class AddEditBustypeComponent {
   ) {
     this.busTypeForm = this.fb.group({
       busType: ['', Validators.required],
-      fareKm: [, Validators.required],
-      minCharge: [, Validators.required],
-      farePerKm: [, Validators.required],
+      fareKm: ['', Validators.required],
+      minCharge: ['', Validators.required],
+      farePerKm: ['', Validators.required],
     });
   }
 
@@ -68,14 +68,18 @@ export class AddEditBustypeComponent {
   }
 
   addBustype(): void {
-    if (this.busTypeForm.valid) {
-      console.log('valid : ', this.busTypeForm.value);
+    if (this.busTypeForm.invalid) {
+      this.busTypeForm.markAllAsTouched();
+      return;
     }
+    console.log('valid : ', this.busTypeForm.value);
   }
 
   editBustype(): void {
-    if (this.busTypeForm.valid) {
-      console.log('valid : ', this.busTypeForm.value);
+    if (this.busTypeForm.invalid) {
+      this.busTypeForm.markAllAsTouched(); // Mark all fields as touched to trigger validation
+      return;
     }
+    console.log('valid : ', this.busTypeForm.value);
   }
 }
