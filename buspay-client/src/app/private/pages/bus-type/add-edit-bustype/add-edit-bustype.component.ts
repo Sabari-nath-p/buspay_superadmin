@@ -23,6 +23,7 @@ export class AddEditBustypeComponent {
   busTypeForm!: FormGroup;
   subscription!: any;
   isValid: boolean = false;
+  busTypeId!: number;
 
   constructor(
     private fb: FormBuilder,
@@ -31,17 +32,29 @@ export class AddEditBustypeComponent {
   ) {
     this.busTypeForm = this.fb.group({
       type: ['', Validators.required],
-      minimum_fare: ['', [Validators.required, Validators.pattern("^[0-9]+(\\.[0-9]+)?$")]],
-      minimum_kilometer: ['', [Validators.required, Validators.pattern("^[0-9]+(\\.[0-9]+)?$")]],
-      fare_per_kilometer: ['', [Validators.required, Validators.pattern("^[0-9]+(\\.[0-9]+)?$")]],
+      minimum_fare: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]+)?$')],
+      ],
+      minimum_kilometer: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]+)?$')],
+      ],
+      fare_per_kilometer: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]+)?$')],
+      ],
     });
   }
 
   ngOnInit(): void {
     if (this.isEdit && this.formData) {
       console.log('patch', this.formData);
+      this.busTypeId = this.formData.id;
       this.busTypeForm.controls['type'].patchValue(this.formData.type);
-      this.busTypeForm.controls['minimum_fare'].patchValue(this.formData.minimum_fare);
+      this.busTypeForm.controls['minimum_fare'].patchValue(
+        this.formData.minimum_fare
+      );
       this.busTypeForm.controls['minimum_kilometer'].patchValue(
         this.formData.minimum_kilometer
       );
@@ -49,7 +62,6 @@ export class AddEditBustypeComponent {
         this.formData.fare_per_kilometer
       );
     }
-    
 
     this.subscription = this.modalService.modalButtonClick$.subscribe(
       (id: string) => {
@@ -85,8 +97,6 @@ export class AddEditBustypeComponent {
     // });
   }
 
-  
-
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -95,24 +105,24 @@ export class AddEditBustypeComponent {
 
   addBustype(): void {
     if (this.busTypeForm.invalid) {
-      this.isValid=false
+      this.isValid = false;
       this.busTypeForm.markAllAsTouched();
       return;
     }
-    this.isValid=true
-    
+    this.isValid = true;
+
     const formattedData = {
       ...this.busTypeForm.value,
       minimum_fare: Number(this.busTypeForm.value.minimum_fare),
       minimum_kilometer: Number(this.busTypeForm.value.minimum_kilometer),
       fare_per_kilometer: Number(this.busTypeForm.value.fare_per_kilometer),
     };
-  
-    this.busService.createBusType(formattedData).subscribe((res:any)=>{
-      if(res.status){
-        this.busService.getAllBusTypes()
+
+    this.busService.createBusType(formattedData).subscribe((res: any) => {
+      if (res.status) {
+        this.busService.getAllBusTypes();
       }
-    })
+    });
   }
 
   editBustype(): void {
@@ -120,12 +130,32 @@ export class AddEditBustypeComponent {
       this.busTypeForm.markAllAsTouched();
       return;
     }
-    console.log('valid : ', this.busTypeForm.value);
+
+    const formData = {
+      // ...this.busTypeForm.value,
+      type: this.busTypeForm.value.type,
+      minimum_fare: Number(this.busTypeForm.value.minimum_fare),
+      minimum_kilometer: Number(this.busTypeForm.value.minimum_kilometer),
+      fare_per_kilometer: Number(this.busTypeForm.value.fare_per_kilometer),
+    };
+    this.busService.updateBusType(this.busTypeId, formData).subscribe({
+      next: (response: any) => {
+        if (response.status) {
+          console.log(response.message);
+          // Implement toast
+          this.busService.getAllBusTypes();
+        }
+      },
+      error: (error: any) => {
+        console.error('Update failed', error);
+        // Implement toast
+      },
+    });
   }
 
   resetForm(): void {
-    this.busTypeForm.reset(); 
-    this.busTypeForm.markAsPristine(); 
-    this.busTypeForm.markAsUntouched(); 
+    this.busTypeForm.reset();
+    this.busTypeForm.markAsPristine();
+    this.busTypeForm.markAsUntouched();
   }
 }

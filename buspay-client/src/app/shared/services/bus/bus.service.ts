@@ -29,7 +29,12 @@ export class BusService {
     return this.httpClientService.post('bus-type', busTypeData);
   }
 
+  updateBusType(busTypeId: number, busTypeData: any): any {
+    console.log('update bus type')
+    return this.httpClientService.updatePatch('bus-type', busTypeId, busTypeData)
+  }
+
   deleteBusType(busTypeId: number): any {
-    return this.httpClientService.delete('bus-type', busTypeId)
+    return this.httpClientService.delete('bus-type', busTypeId);
   }
 }

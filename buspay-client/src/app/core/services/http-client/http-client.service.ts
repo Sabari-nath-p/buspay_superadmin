@@ -76,6 +76,29 @@ export class HttpClientService {
   }
 
   /**
+   * PATCH method API call
+   *
+   * @param route API route.
+   * @param id? id if any.
+   * @param params? Parameters if any.
+   * @returns Return API response.
+   */
+  updatePatch(route: string, id?: number, params?: any): Observable<any> {
+    const url = id
+      ? this.baseUrl + `${route}/${id}`
+      : this.baseUrl + `${route}`;
+      console.log(url,params);
+    return this.http
+      .patch(url, params)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
    * DELETE method API call
    *
    * @param route API route.
