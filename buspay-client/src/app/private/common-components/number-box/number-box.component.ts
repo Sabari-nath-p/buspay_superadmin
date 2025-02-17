@@ -15,14 +15,14 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
-// import { InputTextModule } from 'primeng/inputtext';
+import { TextBoxComponent } from '../text-box/text-box.component';
 
 @Component({
-  selector: 'app-text-box',
+  selector: 'app-number-box',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './text-box.component.html',
-  styleUrl: './text-box.component.scss',
+  templateUrl: './number-box.component.html',
+  styleUrl: './number-box.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -31,8 +31,7 @@ import {
     },
   ],
 })
-export class TextBoxComponent implements ControlValueAccessor {
-  @Input() type: string = 'text';
+export class NumberBoxComponent implements ControlValueAccessor {
   @Input() control!: AbstractControl;
   @Input() placeholder: string = '';
   @Input() iconClass: string = '';
@@ -41,15 +40,8 @@ export class TextBoxComponent implements ControlValueAccessor {
 
   formcontrol = new FormControl();
 
-  // ngDoCheck() {
-  //   if (this.control) {
-  //     this.formcontrol = this.control as FormControl;
-  //   }
-  // }
-
   constructor(private cdr: ChangeDetectorRef) {}
 
-  // Implement ControlValueAccessor methods
   onChange: any = () => {};
   onTouched: any = () => {};
   writeValue(value: any): void {

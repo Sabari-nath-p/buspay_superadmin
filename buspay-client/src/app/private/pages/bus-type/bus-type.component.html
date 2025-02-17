@@ -11,7 +11,7 @@
         [placeholder]="'Search by name..'"
         (onValueChanged)="onValueChange($event)"
       />
-      <button class="btn" (click)="addBusType()">ADD</button>
+      <button class="btn" (click)="createBusType()">ADD</button>
     </form>
     <!-- </div>
     </div> -->
@@ -30,10 +30,11 @@
   [isHeaderRequired]="true"
   [isFooterRequired]="true"
   [content]="addBusTypeTemplate"
+
 ></app-common-modal>
 
 <ng-template #addBusTypeTemplate>
-  <app-add-edit-bustype></app-add-edit-bustype>
+  <app-add-edit-bustype #test></app-add-edit-bustype>
 </ng-template>
 
 <ng-template #editBusTypeTemplate>

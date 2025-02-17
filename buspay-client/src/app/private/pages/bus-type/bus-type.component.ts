@@ -1,6 +1,7 @@
 import {
   ChangeDetectorRef,
   Component,
+  ComponentRef,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -17,6 +18,7 @@ import {
 import { CommonModalComponent } from '../../common-components/common-modal/common-modal.component';
 import { AddEditBustypeComponent } from './add-edit-bustype/add-edit-bustype.component';
 import { AlertConfirmService } from '../../common-components/alert-confirm/alert-confirm.service';
+import { BusService } from '../../../shared/services/bus/bus.service';
 
 @Component({
   selector: 'app-bus-type',
@@ -37,9 +39,14 @@ export class BusTypeComponent {
   addBusTypeTemplate!: TemplateRef<any>;
   @ViewChild('editBusTypeTemplate', { static: false })
   editBusTypeTemplate!: TemplateRef<any>;
+  @ViewChild('test', { static: false })
+  test!: AddEditBustypeComponent;
 
   searchForm!: FormGroup;
   selectedBusType!: any;
+
+  addModal!: any;
+  editModal!: any;
 
   modalEditButton: ModalButton[] = [
     // {
@@ -69,43 +76,43 @@ export class BusTypeComponent {
   ];
 
   //sampleData
-  busTypeList: any = [
-    {
-      id: 'BT001',
-      busType: 'ORDINARY',
-      fareKm: '2.5 KM',
-      minCharge: 10,
-      farePerKm: 1.2,
-    },
-    {
-      id: 'BT002',
-      busType: 'EXPRESS',
-      fareKm: '2.5 KM',
-      minCharge: 15,
-      farePerKm: 1.8,
-    },
-    {
-      id: 'BT003',
-      busType: 'DELUXE',
-      fareKm: '2.5 KM',
-      minCharge: 20,
-      farePerKm: 2.5,
-    },
-    {
-      id: 'BT004',
-      busType: 'AC',
-      fareKm: '2.5 KM',
-      minCharge: 25,
-      farePerKm: 3.0,
-    },
-    {
-      id: 'BT005',
-      busType: 'SLEEPER',
-      fareKm: '2.5 KM',
-      minCharge: 30,
-      farePerKm: 3.5,
-    },
-  ];
+  busTypeList: any = [];
+  //   {
+  //     id: 'BT001',
+  //     busType: 'ORDINARY',
+  //     fareKm: '2.5 KM',
+  //     minCharge: 10,
+  //     farePerKm: 1.2,
+  //   },
+  //   {
+  //     id: 'BT002',
+  //     busType: 'EXPRESS',
+  //     fareKm: '2.5 KM',
+  //     minCharge: 15,
+  //     farePerKm: 1.8,
+  //   },
+  //   {
+  //     id: 'BT003',
+  //     busType: 'DELUXE',
+  //     fareKm: '2.5 KM',
+  //     minCharge: 20,
+  //     farePerKm: 2.5,
+  //   },
+  //   {
+  //     id: 'BT004',
+  //     busType: 'AC',
+  //     fareKm: '2.5 KM',
+  //     minCharge: 25,
+  //     farePerKm: 3.0,
+  //   },
+  //   {
+  //     id: 'BT005',
+  //     busType: 'SLEEPER',
+  //     fareKm: '2.5 KM',
+  //     minCharge: 30,
+  //     farePerKm: 3.5,
+  //   },
+  // ];
 
   gridData!: any;
 
@@ -113,7 +120,8 @@ export class BusTypeComponent {
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
     private modalService: CommonModalService,
-    private alertConfirmService: AlertConfirmService
+    private alertConfirmService: AlertConfirmService,
+    private busService: BusService
   ) {
     this.searchForm = this.fb.group({
       searchName: [''],
@@ -122,7 +130,7 @@ export class BusTypeComponent {
 
   colDefs: any[] = [
     {
-      field: 'busType',
+      field: 'type',
       headerName: 'BUS TYPE',
       filter: true,
       headerComponentParams: {
@@ -131,8 +139,8 @@ export class BusTypeComponent {
       cellStyle: { textAlign: 'center', fontSize: '16px' },
     },
     {
-      field: 'fareKm',
-      headerName: 'FARE KM',
+      field: 'minimum_kilometer',
+      headerName: 'MINIMUM KM',
       filter: true,
       headerComponentParams: {
         style: { textAlign: 'center' },
@@ -140,7 +148,7 @@ export class BusTypeComponent {
       cellStyle: { textAlign: 'center', fontSize: '16px' },
     },
     {
-      field: 'minCharge',
+      field: 'minimum_fare',
       headerName: 'MIN CHARGE',
       filter: true,
       headerComponentParams: {
@@ -152,7 +160,7 @@ export class BusTypeComponent {
       },
     },
     {
-      field: 'farePerKm',
+      field: 'fare_per_kilometer',
       headerName: 'FARE PER KM',
       filter: true,
       headerComponentParams: {
@@ -179,7 +187,14 @@ export class BusTypeComponent {
   ];
 
   ngOnInit() {
+    this.busService.getAllBusTypes();
     this.initializeGridData();
+
+    this.busService.busTypes$.subscribe((data: any) => {
+      this.busTypeList = data;
+      console.log(this.busTypeList);
+      this.initializeGridData();
+    });
   }
 
   initializeGridData() {
@@ -188,13 +203,15 @@ export class BusTypeComponent {
   }
 
   getBusTypeList(): void {
-    // this.busTypeList = this.busService.getBusTypeList()
+    this.busService.busTypes$.subscribe((data: any) => {
+      this.busTypeList = data;
+    });
   }
 
-  addBusType() {
+  createBusType() {
     this.cdRef.detectChanges();
     setTimeout(() => {
-      this.modalService.showModal({
+      this.addModal = {
         heading: 'CREATE TYPE',
         content: this.addBusTypeTemplate,
         isHeaderRequired: true,
@@ -202,7 +219,8 @@ export class BusTypeComponent {
         width: ModalSize.MEDIUM,
         height: ModalSize.MEDIUM,
         buttons: this.modalAddButton,
-      });
+      };
+      this.modalService.showModal(this.addModal);
     }, 200);
   }
 
@@ -210,7 +228,7 @@ export class BusTypeComponent {
     this.selectedBusType = data;
     this.cdRef.detectChanges();
     setTimeout(() => {
-      this.modalService.showModal({
+      this.editModal = {
         heading: 'EDIT TYPE',
         content: this.editBusTypeTemplate,
         isHeaderRequired: true,
@@ -218,7 +236,8 @@ export class BusTypeComponent {
         width: ModalSize.MEDIUM,
         height: ModalSize.MEDIUM,
         buttons: this.modalEditButton,
-      });
+      };
+      this.modalService.showModal(this.editModal);
     }, 200);
   }
 
@@ -245,7 +264,7 @@ export class BusTypeComponent {
     console.log(event);
     if (this.searchForm.value.searchName.length > 0) {
       this.gridData = this.busTypeList.filter((data: any) =>
-        data.busType
+        data.type
           .toLowerCase()
           .includes(this.searchForm.value.searchName.toLowerCase())
       );

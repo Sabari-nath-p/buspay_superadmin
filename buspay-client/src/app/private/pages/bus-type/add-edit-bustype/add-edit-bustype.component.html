@@ -4,12 +4,13 @@
       <label>BUS TYPE</label>
       <app-text-box
         [placeholder]="'Bus Type..'"
-        formControlName="busType"
+        formControlName="type"
       ></app-text-box>
       <span
         *ngIf="
-          busTypeForm.controls['busType'].invalid &&
-          busTypeForm.controls['busType'].touched
+          !isValid &&
+          busTypeForm.controls['type'].hasError('require') &&
+          busTypeForm.controls['type'].touched
         "
         class="text-danger"
       >
@@ -18,53 +19,77 @@
     </div>
 
     <div class="add-edit-fields">
-      <label>FARE KM</label>
+      <label>MINIMUM KM</label>
       <app-text-box
-        [placeholder]="'Fare KM..'"
-        formControlName="fareKm"
+        [type]="'number'"
+        [placeholder]="'MINIMUM KM..'"
+        formControlName="minimum_kilometer"
       ></app-text-box>
       <span
         *ngIf="
-          busTypeForm.controls['fareKm'].invalid &&
-          busTypeForm.controls['fareKm'].touched
+          !isValid &&
+          busTypeForm.controls['minimum_kilometer'].hasError('require') &&
+          busTypeForm.controls['minimum_kilometer'].touched
         "
         class="text-danger"
       >
         Required
+      </span>
+      <span
+        *ngIf="busTypeForm.controls['minimum_kilometer'].hasError('pattern') && busTypeForm.controls['minimum_kilometer'].touched"
+        class="text-danger"
+      >
+        Enter a valid number.
       </span>
     </div>
 
     <div class="add-edit-fields">
       <label>MINIMUM CHARGE</label>
       <app-text-box
+        [type]="'number'"
         [placeholder]="'Minimum Charge..'"
-        formControlName="minCharge"
+        formControlName="minimum_fare"
       ></app-text-box>
       <span
         *ngIf="
-          busTypeForm.controls['minCharge'].invalid &&
-          busTypeForm.controls['minCharge'].touched
+          !isValid &&
+          busTypeForm.controls['minimum_fare'].hasError('require') &&
+          busTypeForm.controls['minimum_fare'].touched
         "
         class="text-danger"
       >
         Required
+      </span>
+      <span
+        *ngIf="busTypeForm.controls['minimum_kilometer'].hasError('pattern') && busTypeForm.controls['minimum_kilometer'].touched"
+        class="text-danger"
+      >
+        Enter a valid number.
       </span>
     </div>
 
     <div class="add-edit-fields">
       <label>FARE PER KM</label>
       <app-text-box
+        [type]="'number'"
         [placeholder]="'Fare per Km'"
-        formControlName="farePerKm"
+        formControlName="fare_per_kilometer"
       ></app-text-box>
       <span
         *ngIf="
-          busTypeForm.controls['farePerKm'].invalid &&
-          busTypeForm.controls['farePerKm'].touched
+          !isValid &&
+          busTypeForm.controls['fare_per_kilometer'].hasError('require') &&
+          busTypeForm.controls['fare_per_kilometer'].touched
         "
         class="text-danger"
       >
         Required
+      </span>
+      <span
+        *ngIf="busTypeForm.controls['minimum_kilometer'].hasError('pattern') && busTypeForm.controls['minimum_kilometer'].touched"
+        class="text-danger"
+      >
+        Enter a valid number.
       </span>
     </div>
   </form>

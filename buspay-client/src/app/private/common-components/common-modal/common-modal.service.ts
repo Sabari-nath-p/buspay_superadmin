@@ -10,6 +10,11 @@ export class CommonModalService {
   private modalButtonClickSource = new BehaviorSubject<any>(null);
   modalButtonClick$ = this.modalButtonClickSource.asObservable();
 
+  onHideModal = new BehaviorSubject<any>(false);
+  hideModalSubject$ = this.onHideModal.asObservable();
+
+  private modalOpen = false;
+
   emitButtonClick(id: string) {
     this.modalButtonClickSource.next(id);
 
@@ -39,6 +44,7 @@ export class CommonModalService {
     height?: string;
     buttons?: ModalButton[];
   }) {
+    this.modalOpen = true
     this.modalConfig.next({
       heading: config.heading,
       content: config.content,
@@ -51,6 +57,16 @@ export class CommonModalService {
   }
 
   hideModal() {
-    this.modalConfig.next(null);
+    
+    this.modalOpen = false;
+    if (this.modalConfig.getValue() !== null) {
+      this.modalConfig.next(null); 
+      this.onHideModal.next(true)
+    }
   }
+
+  isModalOpen(): boolean {
+    return this.modalOpen;
+  }
+  
 }
