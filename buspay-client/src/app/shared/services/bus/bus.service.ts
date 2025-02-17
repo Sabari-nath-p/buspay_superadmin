@@ -9,6 +9,8 @@ import { StatusCode } from '../../../core/utilities/buspay.enums';
 export class BusService {
   busTypeData = new BehaviorSubject<any>([]);
   busTypes$ = this.busTypeData.asObservable();
+  busPreferenceData = new BehaviorSubject<any>([]);
+  busPreferences$ = this.busPreferenceData.asObservable();
 
   constructor(private httpClientService: HttpClientService) {}
 
@@ -25,16 +27,48 @@ export class BusService {
     });
   }
 
+  getAllBusPreferences(): any {
+    this.httpClientService.get('preference').subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.busPreferenceData.next(res.data);
+        } else {
+          this.busPreferenceData.next([]);
+        }
+      },
+      error: (err) => this.busPreferenceData.next([]),
+    });
+  }
+
   createBusType(busTypeData: any): any {
     return this.httpClientService.post('bus-type', busTypeData);
   }
 
+  createBusPreference(preferenceData: any): any {
+    return this.httpClientService.post('preference', preferenceData);
+  }
+
   updateBusType(busTypeId: number, busTypeData: any): any {
-    console.log('update bus type')
-    return this.httpClientService.updatePatch('bus-type', busTypeId, busTypeData)
+    return this.httpClientService.updatePatch(
+      'bus-type',
+      busTypeId,
+      busTypeData
+    );
+  }
+
+  updateBusPreference(preferenceId: number, preferenceData: any): any {
+    return this.httpClientService.updatePatch(
+      'preference',
+      preferenceId,
+      preferenceData
+    );
   }
 
   deleteBusType(busTypeId: number): any {
     return this.httpClientService.delete('bus-type', busTypeId);
+  }
+
+  deleteBusPreference(preferenceId: number): any {
+    return this.httpClientService.delete('preference', preferenceId);
   }
 }

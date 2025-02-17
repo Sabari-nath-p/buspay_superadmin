@@ -219,7 +219,6 @@ export class BusTypeComponent {
   }
 
   confirmDelete(data: any): void {
-    console.log('Delete :', data);
     this.busService.deleteBusType(data.id).subscribe((res: any) => {
       if (res.status) {
         console.log(res.message); // Need to implement toast..
@@ -228,7 +227,6 @@ export class BusTypeComponent {
   }
 
   onValueChange(event: any): void {
-    console.log(event);
     if (this.searchForm.value.searchName.length > 0) {
       this.gridData = this.busTypeList.filter((data: any) =>
         data.type

@@ -1,6 +1,20 @@
 @import "../../../../styles/theme.scss";
 @import "../../../../styles/variables";
+
+.preference-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+}
+
 .preference-search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
   background: $white;
   // background: black;
   padding-inline: 16px;
@@ -13,12 +27,49 @@
     font-weight: $font-weight-bold;
   }
   .search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
     align-items: center;
+
+    app-text-box {
+      width: 100%;
+    }
 
     button {
       background: $app-brand-primary;
       color: $white;
       outline: none;
+      width: 20%;
     }
+  }
+}
+
+.preferences-list {
+  display: flex;
+  /* justify-content: center; */
+  background: #fff;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  padding-block: 16px;
+  padding-inline: 16px;
+  gap: 8px;
+
+  .card {
+    height: fit-content;
+    min-width: 250px;
+    width: fit-content;
+  }
+}
+
+::ng-deep .action-button {
+  background: $app-brand-primary;
+  color: $white;
+  outline: none;
+
+  &:hover {
+    background: $app-brand-primary;
   }
 }

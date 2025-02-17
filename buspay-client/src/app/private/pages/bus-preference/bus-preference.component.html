@@ -1,16 +1,72 @@
-<div>
-  <div class="row preference-search-container">
+<div class="preference-list-container">
+  <div class="preference-search-container">
     <h2 class="col-6">Bus Preferences</h2>
-    <div class="col-6 search-container">
-      <div class="row">
-        <app-text-box
-          class="col-10"
-          [iconClass]="'pi pi-search'"
-          [placeholder]="'Search by name..'"
-          (onValueChanged)="onValueChange($event)"
-        />
-        <button class="col-2 btn">ADD</button>
+    <!-- <div class="col-6 search-container">
+      <div class="row" > -->
+    <form class="search-container" [formGroup]="searchForm">
+      <app-text-box
+        class=""
+        formControlName="searchName"
+        [iconClass]="'pi pi-search'"
+        [placeholder]="'Search by name..'"
+        (onValueChanged)="onValueChange($event)"
+      />
+      <button class="btn" (click)="createPreference()">ADD</button>
+    </form>
+    <!-- </div>
+    </div> -->
+  </div>
+  <div class="preferences-list">
+    <div class="card" *ngFor="let preference of preferencesList">
+      <div class="card-body">
+        <h4 class="card-title">{{ preference.name }}</h4>
+        <!-- <p class="card-text">Some example text. Some example text.</p> -->
+        <button
+          class="btn btn-link p-0"
+          title="Edit"
+          (click)="editPreference(preference)"
+        >
+          <app-icon
+            [name]="'edit'"
+            [title]="'Edit'"
+            className="icon-size-43"
+            ariaHidden="false"
+            focusable="false"
+          ></app-icon>
+        </button>
+        <button
+          class="btn btn-link p-0"
+          title="Delete"
+          (click)="deletePreference(preference)"
+        >
+          <app-icon
+            [name]="'delete'"
+            [title]="'Delete'"
+            className="icon-size-45"
+            ariaHidden="false"
+            focusable="false"
+          ></app-icon>
+        </button>
       </div>
     </div>
   </div>
 </div>
+
+
+<app-common-modal
+  [isHeaderRequired]="true"
+  [isFooterRequired]="true"
+  [content]="addPreferenceTemplate"
+
+></app-common-modal>
+
+<ng-template #addPreferenceTemplate>
+  <app-add-edit-preference ></app-add-edit-preference>
+</ng-template>
+
+<ng-template #editPreferenceTemplate>
+  <app-add-edit-preference
+    [formData]="selectedPreference"
+    [isEdit]="true"
+  ></app-add-edit-preference>
+</ng-template>
