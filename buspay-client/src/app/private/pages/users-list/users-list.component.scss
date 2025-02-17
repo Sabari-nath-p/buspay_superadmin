@@ -4,8 +4,21 @@
 .users-list-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  // justify-content: space-between;
   gap: 12px;
+  height: 100%;
+  
+  .users-list{
+    display: flex;
+    flex-direction: column;
+    background: $white;
+    border-radius: 20px;
+    padding-block:12px;
+    padding-inline:12px;
+    // height: 100%;
+    width: 100%;
+    // box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.1);
+  }
 }
 
 .users-search-container {
@@ -70,20 +83,20 @@
 //   font-size: 14px !important;
 // }
 
-// ::ng-deep .status-inactive {
-//   background-color: #fcdede;
-//   color: #e14949;
-//   outline: none;
-//   padding: 5px;
-//   border-radius: 5px;
-//   text-transform: uppercase !important;
-// }
+::ng-deep .status-inactive {
+  background-color: #fcdede;
+  color: #e14949;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  text-transform: uppercase !important;
+}
 
-// ::ng-deep .status-active {
-//   background-color: #fffbeb;
-//   color: #f6a723;
-//   outline: none;
-//   padding: 5px;
-//   border-radius: 5px;
-//   text-transform: uppercase !important;
-// }
+::ng-deep .status-active {
+  background-color: #fffbeb;
+  color: #f6a723;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  text-transform: uppercase !important;
+}

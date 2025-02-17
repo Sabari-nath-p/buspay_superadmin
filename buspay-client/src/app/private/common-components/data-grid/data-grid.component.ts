@@ -29,6 +29,7 @@ export class DataGridComponent {
   defaultColDef: ColDef = {
     flex: 1,
     minWidth: 100,
+    autoHeight: true,
   };
 
   onGridReady(event: GridReadyEvent<any>): void {

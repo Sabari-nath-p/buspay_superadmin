@@ -16,8 +16,11 @@
     <!-- </div>
     </div> -->
   </div>
-  <div class="preferences-list">
-    <div class="card" *ngFor="let preference of preferencesList">
+  <div class="list-wrapper">
+
+  
+  <div class="row preferences-list">
+    <div class="col-md-2 card" *ngFor="let preference of preferencesList">
       <div class="card-body">
         <h4 class="card-title">{{ preference.name }}</h4>
         <!-- <p class="card-text">Some example text. Some example text.</p> -->
@@ -50,6 +53,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 

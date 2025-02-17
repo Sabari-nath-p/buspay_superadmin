@@ -1,0 +1,5 @@
+.grid-container {
+  ::ng-deep .btn {
+    --bs-btn-line-height: 1.2;
+  }
+}
