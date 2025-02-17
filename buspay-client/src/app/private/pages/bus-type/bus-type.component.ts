@@ -258,6 +258,11 @@ export class BusTypeComponent {
 
   confirmDelete(data: any): void {
     console.log('Delete :', data);
+    this.busService.deleteBusType(data.id).subscribe((res: any) => {
+      if (res.status) {
+        console.log(res.message); // Need to implement toast..
+      }
+    });
   }
 
   onValueChange(event: any): void {

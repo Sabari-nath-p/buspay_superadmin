@@ -87,7 +87,7 @@ export class HttpClientService {
       ? this.baseUrl + `${route}/${id}`
       : this.baseUrl + `${route}`;
     return this.http
-      .delete(route)
+      .delete(url)
       .pipe(
         map((response) => {
           return response;

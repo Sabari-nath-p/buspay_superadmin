@@ -28,4 +28,8 @@ export class BusService {
   createBusType(busTypeData: any): any {
     return this.httpClientService.post('bus-type', busTypeData);
   }
+
+  deleteBusType(busTypeId: number): any {
+    return this.httpClientService.delete('bus-type', busTypeId)
+  }
 }
