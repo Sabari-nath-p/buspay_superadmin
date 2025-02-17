@@ -29,7 +29,7 @@
   .type-search-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
 
     background: $white;
     // background: black;
@@ -43,7 +43,7 @@
       font-weight: $font-weight-bold;
     }
     .search-container {
-      width: 100%;
+      width: 25%;
       display: flex;
       justify-content: center;
       gap: 6px;
@@ -69,5 +69,6 @@
 
   &:hover {
     background: $app-brand-primary;
+    color: $white;
   }
 }

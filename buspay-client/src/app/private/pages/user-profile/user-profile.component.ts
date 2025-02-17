@@ -17,11 +17,22 @@ import {
 } from '../../../core/utilities/buspay.enums';
 import { AvatarService } from '../../../shared/services/avatar.service';
 import { ActivatedRoute } from '@angular/router';
+import { ListBusesComponent } from './list-buses/list-buses.component';
+import { ListConductorsComponent } from './list-conductors/list-conductors.component';
+import { ListSettlementsComponent } from './list-settlements/list-settlements.component';
+import { ProfileAnalyticsComponent } from './profile-analytics/profile-analytics.component';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, TabsPanelComponent],
+  imports: [
+    CommonModule,
+    TabsPanelComponent,
+    ListBusesComponent,
+    ListConductorsComponent,
+    ListSettlementsComponent,
+    ProfileAnalyticsComponent,
+  ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -44,7 +55,7 @@ export class UserProfileComponent {
   // userDetails!: any;
   Parent = ProfileParent;
   userProfileImage!: any;
-  userId!:any
+  userId!: any;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -56,7 +67,7 @@ export class UserProfileComponent {
     const navigation = history.state;
     if (navigation && navigation.userDetails) {
       this.userDetails = navigation.userDetails;
-      this.userId = this.userDetails.id
+      this.userId = this.userDetails.id;
       this.parentScreen = navigation.parent;
     } else {
       this.userId = Number(this.route.snapshot.paramMap.get('id'));
@@ -103,16 +114,19 @@ export class UserProfileComponent {
     }
   }
 
-  onApprove():void{
-    this.userService.changeSettlementStatus(this.userId,SettleStatus.APPROVED).subscribe((res:any)=>{
-      console.log("Status change : ",res);
-    })
+  onApprove(): void {
+    this.userService
+      .changeSettlementStatus(this.userId, SettleStatus.APPROVED)
+      .subscribe((res: any) => {
+        console.log('Status change : ', res);
+      });
   }
 
-  onRejected():void{
-    this.userService.changeSettlementStatus(this.userId,SettleStatus.REJECTED).subscribe((res:any)=>{
-      console.log("Status change : ",res);
-    })
+  onRejected(): void {
+    this.userService
+      .changeSettlementStatus(this.userId, SettleStatus.REJECTED)
+      .subscribe((res: any) => {
+        console.log('Status change : ', res);
+      });
   }
-
 }

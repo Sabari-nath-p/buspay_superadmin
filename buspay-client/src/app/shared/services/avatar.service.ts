@@ -17,7 +17,7 @@ export class AvatarService {
     if (!context) {
       return false;
     }
-    context.fillStyle = '#22C55E';
+    context.fillStyle = '#0F67B1';
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.font = '16px Arial';
     context.fillStyle = '#fff';

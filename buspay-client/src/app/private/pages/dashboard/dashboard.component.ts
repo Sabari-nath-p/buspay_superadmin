@@ -155,6 +155,10 @@ export class DashboardComponent {
     {
       field: 'action',
       headerName: 'Action',
+      headerComponentParams: {
+        style: { textAlign: 'center' },
+      },
+      cellStyle: { textAlign: 'center' },
       cellRenderer: (params: any) => {
         const button = document.createElement('button');
         button.innerText = 'View Request';
@@ -184,10 +188,9 @@ export class DashboardComponent {
   }
 
   onValueChange(event: any): void {
-    console.log(event);
     if (this.searchForm.value.searchName.length > 0) {
       this.gridData = this.onBoardList.filter((data: any) =>
-        data.type
+        data.name
           .toLowerCase()
           .includes(this.searchForm.value.searchName.toLowerCase())
       );
