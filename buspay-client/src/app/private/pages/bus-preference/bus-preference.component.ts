@@ -81,11 +81,15 @@ export class BusPreferenceComponent {
     });
   }
   ngOnInit(): void {
-    this.busService.getAllBusPreferences();
+    this.getAllBusPreferences();
 
     this.busService.busPreferences$.subscribe((data: any) => {
       this.preferencesList = data;
     });
+  }
+
+  getAllBusPreferences() {
+    this.busService.getAllBusPreferences();
   }
 
   getBusPreferenceList(): void {
@@ -146,7 +150,7 @@ export class BusPreferenceComponent {
     this.busService.deleteBusPreference(data.id).subscribe((res: any) => {
       if (res.status) {
         console.log(res.message); // Need to implement toast..
-        this.getBusPreferenceList()
+        this.getAllBusPreferences();
       }
     });
   }
