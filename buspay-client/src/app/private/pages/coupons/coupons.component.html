@@ -1,1 +1,42 @@
-<p>coupons works!</p>
+<div class="coupon-list-container">
+  <div class="type-search-container">
+    <h2 class="col-6">Coupons</h2>
+
+    <form class="search-container" [formGroup]="searchForm">
+      <app-text-box
+        class=""
+        formControlName="searchName"
+        [iconClass]="'pi pi-search'"
+        [placeholder]="'Search by name..'"
+        (onValueChanged)="onValueChange($event)"
+      />
+      <button class="btn" (click)="addCoupons()">ADD</button>
+    </form>
+  </div>
+  <div class="coupon-list">
+    <app-data-grid
+      [rowData]="gridData"
+      [colDefs]="colDefs"
+      [pagination]="true"
+      [paginationPageSizeSelector]="[5, 10, 100]"
+    ></app-data-grid>
+  </div>
+</div>
+
+<app-common-modal
+  [isHeaderRequired]="true"
+  [isFooterRequired]="true"
+  [content]="addCouponTemplate"
+
+></app-common-modal>
+
+<ng-template #addCouponTemplate>
+  <app-add-edit-coupon></app-add-edit-coupon>
+</ng-template>
+
+<ng-template #editCouponTemplate>
+  <app-add-edit-coupon
+    [formData]="selectedCoupon"
+    [isEdit]="true"
+  ></app-add-edit-coupon>
+</ng-template>

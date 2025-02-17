@@ -75,44 +75,7 @@ export class BusTypeComponent {
     },
   ];
 
-  //sampleData
   busTypeList: any = [];
-  //   {
-  //     id: 'BT001',
-  //     busType: 'ORDINARY',
-  //     fareKm: '2.5 KM',
-  //     minCharge: 10,
-  //     farePerKm: 1.2,
-  //   },
-  //   {
-  //     id: 'BT002',
-  //     busType: 'EXPRESS',
-  //     fareKm: '2.5 KM',
-  //     minCharge: 15,
-  //     farePerKm: 1.8,
-  //   },
-  //   {
-  //     id: 'BT003',
-  //     busType: 'DELUXE',
-  //     fareKm: '2.5 KM',
-  //     minCharge: 20,
-  //     farePerKm: 2.5,
-  //   },
-  //   {
-  //     id: 'BT004',
-  //     busType: 'AC',
-  //     fareKm: '2.5 KM',
-  //     minCharge: 25,
-  //     farePerKm: 3.0,
-  //   },
-  //   {
-  //     id: 'BT005',
-  //     busType: 'SLEEPER',
-  //     fareKm: '2.5 KM',
-  //     minCharge: 30,
-  //     farePerKm: 3.5,
-  //   },
-  // ];
 
   gridData!: any;
 
@@ -192,7 +155,6 @@ export class BusTypeComponent {
 
     this.busService.busTypes$.subscribe((data: any) => {
       this.busTypeList = data;
-      console.log(this.busTypeList);
       this.initializeGridData();
     });
   }

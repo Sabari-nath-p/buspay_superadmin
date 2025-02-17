@@ -1,0 +1,73 @@
+@import "../../../../styles/theme.scss";
+@import "../../../../styles/variables";
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+
+  .onboard-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    background: $white;
+    padding-inline: 16px;
+    padding-block: 24px;
+    border-radius: 10px;
+
+    .onboard-list {
+      display: flex;
+      padding: 6px;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  .type-search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    background: $white;
+    // background: black;
+    padding-inline: 16px;
+    padding-block: 24px;
+    border-radius: 10px;
+    align-items: center;
+
+    h2 {
+      padding: 0;
+      font-weight: $font-weight-bold;
+    }
+    .search-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      align-items: center;
+
+      app-text-box {
+        width: 100%;
+      }
+
+      button {
+        background: $app-brand-primary;
+        color: $white;
+        outline: none;
+        width: 20%;
+      }
+    }
+  }
+}
+::ng-deep .action-button {
+  background: $app-brand-primary;
+  color: $white;
+  outline: none;
+
+  &:hover {
+    background: $app-brand-primary;
+  }
+}

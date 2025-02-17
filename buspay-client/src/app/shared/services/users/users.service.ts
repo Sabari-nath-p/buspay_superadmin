@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClientService } from '../../../core/services/http-client/http-client.service';
 import { StatusCode } from '../../../core/utilities/buspay.enums';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -38,4 +39,13 @@ export class UsersService {
       }
     });
   }
+
+  changeSettlementStatus(userId: number, status: string):Observable<any> {
+    const route = `settle-requests/${userId}/change-status`;
+    const params = {
+      status: status,
+    };
+    return this.httpClientService.post(route, params)
+  }
+
 }

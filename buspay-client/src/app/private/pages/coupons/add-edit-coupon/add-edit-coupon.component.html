@@ -1,0 +1,105 @@
+<div>
+  <form class="coupon-form" [formGroup]="couponsForm">
+    <div class="add-edit-fields">
+      <label>Coupon Name</label>
+      <app-text-box
+        [placeholder]="'Coupon Name..'"
+        formControlName="couponName"
+      ></app-text-box>
+      <span
+        *ngIf="
+          !isValid &&
+          couponsForm.controls['couponName'].hasError('require') &&
+          couponsForm.controls['couponName'].touched
+        "
+        class="text-danger"
+      >
+        Required
+      </span>
+    </div>
+
+    <div class="add-edit-fields">
+      <label>Minimum Charge</label>
+      <app-text-box
+        [type]="'number'"
+        [placeholder]="'Minimum Charge..'"
+        formControlName="minCharge"
+      ></app-text-box>
+      <span
+        *ngIf="
+          !isValid &&
+          couponsForm.controls['minCharge'].hasError('require') &&
+          couponsForm.controls['minCharge'].touched
+        "
+        class="text-danger"
+      >
+        Required
+      </span>
+      <span
+        *ngIf="
+          couponsForm.controls['minCharge'].hasError('pattern') &&
+          couponsForm.controls['minCharge'].touched
+        "
+        class="text-danger"
+      >
+        Enter a valid number.
+      </span>
+    </div>
+
+    <div class="add-edit-fields">
+      <label>Maximum Charge</label>
+      <app-text-box
+        [type]="'number'"
+        [placeholder]="'Maximum Charge..'"
+        formControlName="maxCharge"
+      ></app-text-box>
+      <span
+        *ngIf="
+          !isValid &&
+          couponsForm.controls['maxCharge'].hasError('require') &&
+          couponsForm.controls['maxCharge'].touched
+        "
+        class="text-danger"
+      >
+        Required
+      </span>
+      <span
+        *ngIf="
+          couponsForm.controls['maxCharge'].hasError('pattern') &&
+          couponsForm.controls['maxCharge'].touched
+        "
+        class="text-danger"
+      >
+        Enter a valid number.
+      </span>
+    </div>
+
+    <div class="add-edit-fields">
+      <label>Discount %</label>
+      <app-text-box
+        [type]="'number'"
+        [placeholder]="'Discount'"
+        formControlName="discount"
+      ></app-text-box>
+      <span
+        *ngIf="
+          !isValid &&
+          couponsForm.controls['discount'].hasError('require') &&
+          couponsForm.controls['discount'].touched
+        "
+        class="text-danger"
+      >
+        Required
+      </span>
+      <span
+        *ngIf="
+          couponsForm.controls['discount'].hasError('pattern') &&
+          couponsForm.controls['discount'].touched
+        "
+        class="text-danger"
+      >
+        Enter a valid number.
+      </span>
+    </div>
+  </form>
+</div>

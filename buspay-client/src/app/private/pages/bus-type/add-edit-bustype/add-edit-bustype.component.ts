@@ -49,7 +49,6 @@ export class AddEditBustypeComponent {
 
   ngOnInit(): void {
     if (this.isEdit && this.formData) {
-      console.log('patch', this.formData);
       this.busTypeId = this.formData.id;
       this.busTypeForm.controls['type'].patchValue(this.formData.type);
       this.busTypeForm.controls['minimum_fare'].patchValue(

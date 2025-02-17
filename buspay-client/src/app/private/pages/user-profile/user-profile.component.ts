@@ -12,9 +12,11 @@ import { TabsPanelComponent } from '../../common-components/tabs-panel/tabs-pane
 import { UsersService } from '../../../shared/services/users/users.service';
 import {
   ProfileParent,
+  SettleStatus,
   StatusCode,
 } from '../../../core/utilities/buspay.enums';
 import { AvatarService } from '../../../shared/services/avatar.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -42,14 +44,26 @@ export class UserProfileComponent {
   // userDetails!: any;
   Parent = ProfileParent;
   userProfileImage!: any;
+  userId!:any
 
   constructor(
     private cdr: ChangeDetectorRef,
     private userService: UsersService,
-    private avatarsService: AvatarService
+    private avatarsService: AvatarService,
+    private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    //this.getUserDetailsById(1);
+    const navigation = history.state;
+    if (navigation && navigation.userDetails) {
+      this.userDetails = navigation.userDetails;
+      this.userId = this.userDetails.id
+      this.parentScreen = navigation.parent;
+    } else {
+      this.userId = Number(this.route.snapshot.paramMap.get('id'));
+
+      this.getUserDetailsById(this.userId);
+    }
+
     this.getUserProfileImage();
   }
 
@@ -88,4 +102,17 @@ export class UserProfileComponent {
       );
     }
   }
+
+  onApprove():void{
+    this.userService.changeSettlementStatus(this.userId,SettleStatus.APPROVED).subscribe((res:any)=>{
+      console.log("Status change : ",res);
+    })
+  }
+
+  onRejected():void{
+    this.userService.changeSettlementStatus(this.userId,SettleStatus.REJECTED).subscribe((res:any)=>{
+      console.log("Status change : ",res);
+    })
+  }
+
 }

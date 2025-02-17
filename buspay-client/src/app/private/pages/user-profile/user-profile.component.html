@@ -59,8 +59,12 @@
   <div *ngIf="parentScreen == Parent.SETTLEMENT">
     <hr />
     <div class="action-buttons">
-      <button type="button" class="btn btn-secondary">Decline</button>
-      <button type="button" class="btn btn-primary">Approve</button>
+      <button type="button" class="btn btn-secondary" (click)="onRejected()">
+        Reject
+      </button>
+      <button type="button" class="btn btn-primary" (click)="onApprove()">
+        Approve
+      </button>
     </div>
   </div>
 </div>

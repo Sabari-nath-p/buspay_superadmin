@@ -7,7 +7,10 @@ import {
 import { ViewProfileComponent } from '../view-profile/view-profile.component';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../shared/services/users/users.service';
-import { UserStatus } from '../../../core/utilities/buspay.enums';
+import {
+  ProfileParent,
+  UserStatus,
+} from '../../../core/utilities/buspay.enums';
 import { SettlementService } from '../../../shared/services/settlements/settlement.service';
 import { TextBoxComponent } from '../../common-components/text-box/text-box.component';
 import { SelectBoxComponent } from '../../common-components/select-box/select-box.component';
@@ -19,6 +22,8 @@ import { CommonModalComponent } from '../../common-components/common-modal/commo
 import { CommonModalService } from '../../common-components/common-modal/common-modal.service';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { ModalSize } from '../../../shared/models/common-modal.model';
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-list',
@@ -42,6 +47,9 @@ export class UsersListComponent {
   actionTemplate!: TemplateRef<any>;
   searchForm!: FormGroup;
   selectedUser!: any;
+  viewModal!: any;
+  private selectedUserSubject = new BehaviorSubject<any>([]);
+  selectedUser$ = this.selectedUserSubject.asObservable();
 
   //sample data
   userList: any = [
@@ -126,7 +134,8 @@ export class UsersListComponent {
     private userService: UsersService,
     private settlementService: SettlementService,
     private districtService: DistrictStatesService,
-    private modalService: CommonModalService
+    private modalService: CommonModalService,
+    private router: Router
   ) {
     this.searchForm = this.fb.group({
       searchName: [''],
@@ -139,6 +148,7 @@ export class UsersListComponent {
       field: 'name',
       headerName: 'Name',
       filter: true,
+      sortable: true,
       headerComponentParams: {
         style: { textAlign: 'center' },
       },
@@ -181,20 +191,26 @@ export class UsersListComponent {
   ];
 
   ngOnInit() {
-    // this.getUserData();
-    // this.userService.usersList$.subscribe((users) => {
-    //   // console.log("UserList : ",users)
-    //   this.userList = users;
-    //   this.gridData = users;
-    // });
+    this.getUserData();
+    this.userService.usersList$.subscribe((users: any) => {
+      // console.log("UserList : ",users)
+      this.userList = users;
+      this.gridData = users;
+    });
     // this.getUserById(12);
     // this.changeUserStatus(12, UserStatus.ACTIVE);
     // this.getAllSettlementRequests();
-    // this.getAllDistricts();
-    // this.districtService.districts$.subscribe((res) => {
-    //   this.districts = res;
-    // });
+    this.getAllDistricts();
+    this.districtService.districts$.subscribe((res: any) => {
+      this.districts = res;
+    });
     this.initializeGridData();
+
+    this.selectedUser$.subscribe((user: any) => {
+      console.log('User data changed:', user);
+      this.selectedUser = user;
+      this.cdRef.detectChanges();
+    });
   }
 
   initializeGridData() {
@@ -234,20 +250,12 @@ export class UsersListComponent {
   }
 
   viewUser(user: any) {
-    console.log('Selected User Data:', user);
-    // const templateContent = this.userProfile;
     this.selectedUser = user;
+    this.selectedUserSubject.next(user);
     this.cdRef.detectChanges();
 
-    setTimeout(() => {
-      this.modalService.showModal({
-        heading: 'User Profile',
-        content: this.userProfile,
-        isHeaderRequired: true,
-        isFooterRequired: true,
-        width: ModalSize.EXTRA_LARGE,
-        height: ModalSize.FULL_HEIGHT,
-      });
-    }, 200);
+    this.router.navigate(['/profile', user.id], {
+      state: { userDetails: user, parent: ProfileParent.USERLIST }, // Pass user details via state
+    });
   }
 }

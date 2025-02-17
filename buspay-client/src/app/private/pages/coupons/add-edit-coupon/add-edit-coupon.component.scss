@@ -1,0 +1,17 @@
+.coupon-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  
+    .add-edit-fields {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      // align-items:center;
+      // gap: 6px;
+      color: gray;
+    }
+  }
+  

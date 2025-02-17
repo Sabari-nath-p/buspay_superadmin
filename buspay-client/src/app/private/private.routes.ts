@@ -20,7 +20,9 @@ export const privateRoutes: Routes = [
       { path: 'coupons', component: CouponsComponent },
       { path: 'integrations', component: DashboardComponent },
       { path: 'settings', component: DashboardComponent },
-      { path: 'profile', component: UserProfileComponent },
+      // { path: 'profile', component: UserProfileComponent },
+      { path: 'profile/:id', component: UserProfileComponent },
+      
     ],
   },
 ];
