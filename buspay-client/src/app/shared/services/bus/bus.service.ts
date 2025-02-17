@@ -27,6 +27,10 @@ export class BusService {
     });
   }
 
+  getBusTypeById(typeId:number):any{
+    return this.httpClientService.get('bus-type',typeId)
+  }
+
   getAllBusPreferences(): any {
     this.httpClientService.get('preference').subscribe({
       next: (res) => {
@@ -38,6 +42,10 @@ export class BusService {
       },
       error: (err) => this.busPreferenceData.next([]),
     });
+  }
+
+  getAllBusDetails(): any {
+    return this.httpClientService.get('bus')
   }
 
   createBusType(busTypeData: any): any {

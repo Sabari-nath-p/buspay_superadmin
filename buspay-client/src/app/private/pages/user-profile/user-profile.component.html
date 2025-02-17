@@ -73,7 +73,7 @@
   <app-profile-analytics></app-profile-analytics>
 </ng-template>
 <ng-template #busesTab>
-  <app-list-buses></app-list-buses>
+  <app-list-buses [ownerId]="userId"></app-list-buses>
 </ng-template>
 <ng-template #conductorsTab>
   <app-list-conductors></app-list-conductors>

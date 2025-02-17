@@ -1,1 +1,27 @@
-<p>list-buses works!</p>
+<!-- <div class="list-buses">
+  <div class="col-md-2 card" *ngFor="let bus of busList">
+    <div class="card-body">
+      <h4 class="card-title">{{ bus.name }}</h4>
+      <p class="card-text">{{ bus.bus_no }}</p>
+      <p class="card-text" *ngIf="bus.bus_type">{{ bus.bus_type }}</p>
+    </div>
+  </div>
+</div> -->
+
+<div class="bus-list-container">
+  <div class="row">
+    <div class="col-md-3 col-sm-6 col-12 mb-3" *ngFor="let bus of busList">
+      <div class="card h-100 bus-card">
+        <div class="card-body d-flex flex-column">
+          <h4 class="card-title text-truncate">{{ bus.name }}</h4>
+          <p class="card-text mb-1">
+            <strong>Bus No:</strong> {{ bus.bus_no }}
+          </p>
+          <p class="card-text mb-0" *ngIf="bus.bus_type">
+            <strong>Type:</strong> {{ bus.bus_type }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

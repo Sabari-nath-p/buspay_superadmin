@@ -7,17 +7,18 @@
   // justify-content: space-between;
   gap: 12px;
   height: 100%;
+  // box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   
   .users-list{
     display: flex;
     flex-direction: column;
     background: $white;
-    border-radius: 20px;
+    border-radius: 10px;
     padding-block:12px;
     padding-inline:12px;
     // height: 100%;
     width: 100%;
-    // box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -32,6 +33,7 @@
   padding-block: 24px;
   border-radius: 10px;
   align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 
   h2 {
     padding: 0;
