@@ -3,6 +3,7 @@
 
 .preference-list-container {
   display: flex;
+  
   flex-direction: column;
   justify-content: space-between;
   gap: 12px;
@@ -48,13 +49,13 @@
 
 .preferences-list {
   display: flex;
-  /* justify-content: center; */
-  background: #fff;
+  // justify-content: center; 
+  flex-wrap: wrap;
+  background: $white;
   border-radius: 10px;
   width: 100%;
   height: 100%;
-  padding-block: 16px;
-  padding-inline: 16px;
+  padding: 16px;
   gap: 8px;
 
   .card {
