@@ -9,6 +9,7 @@ import {
 import { TextBoxComponent } from '../../../common-components/text-box/text-box.component';
 import { BusService } from '../../../../shared/services/bus/bus.service';
 import { CommonModalService } from '../../../common-components/common-modal/common-modal.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-add-edit-preference',
@@ -21,7 +22,7 @@ export class AddEditPreferenceComponent {
   @Input() formData: any = [];
   @Input() isEdit: boolean = false;
   preferenceForm!: FormGroup;
-  subscription!: any;
+  subscription: Subscription = new Subscription();
   isValid: boolean = false;
   preferenceId!: number;
 
@@ -36,24 +37,51 @@ export class AddEditPreferenceComponent {
   }
 
   ngOnInit(): void {
+    this.subscription.unsubscribe();
+    this.subscription = new Subscription();
     if (this.isEdit && this.formData) {
       this.preferenceId = this.formData.id;
       this.preferenceForm.controls['name'].patchValue(this.formData.name);
+    }else{
+      this.resetForm();
     }
 
-    this.subscription = this.modalService.modalButtonClick$.subscribe(
-      (id: string) => {
+    // Add new subscription
+    this.subscription.add(
+      this.modalService.modalButtonClick$.subscribe((id: string) => {
         if (!this.modalService.isModalOpen()) return;
-        switch (id) {
-          case 'add':
-            this.addPreference();
-            break;
-          case 'edit':
-            this.editPreference();
-            break;
+
+        if (id === 'add' && !this.isEdit) {
+          this.addPreference();
+        } else if (id === 'edit' && this.isEdit) {
+          this.editPreference();
         }
-      }
+      })
     );
+
+    // Track modal close to clean up
+    this.subscription.add(
+      this.modalService.modalConfig$.subscribe((config) => {
+        if (config === null) {
+          // Modal has been closed
+          this.resetForm();
+        }
+      })
+    );
+
+    // this.subscription = this.modalService.modalButtonClick$.subscribe(
+    //   (id: string) => {
+    //     if (!this.modalService.isModalOpen()) return;
+    //     switch (id) {
+    //       case 'add':
+    //         this.addPreference();
+    //         break;
+    //       case 'edit':
+    //         this.editPreference();
+    //         break;
+    //     }
+    //   }
+    // );
   }
 
   ngOnDestroy(): void {
@@ -77,8 +105,13 @@ export class AddEditPreferenceComponent {
     this.busService.createBusPreference(formattedData).subscribe((res: any) => {
       if (res.status) {
         this.busService.getAllBusPreferences();
+        // Implement toast
       }
     });
+    this.modalService.hideModal();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   editPreference(): void {
@@ -103,5 +136,16 @@ export class AddEditPreferenceComponent {
         // Implement toast
       },
     });
+    this.modalService.hideModal();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  resetForm():void {
+    this.preferenceForm.reset()
+    this.preferenceForm.markAsPristine();
+    this.preferenceForm.markAsUntouched();
+    this.isValid = true;
   }
 }

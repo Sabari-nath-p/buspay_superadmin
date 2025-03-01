@@ -9,6 +9,8 @@ import {
 import { TextBoxComponent } from '../../../common-components/text-box/text-box.component';
 import { BusService } from '../../../../shared/services/bus/bus.service';
 import { CommonModalService } from '../../../common-components/common-modal/common-modal.service';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { CouponsService } from '../../../../shared/services/coupons/coupons.service';
 
 @Component({
   selector: 'app-add-edit-coupon',
@@ -21,14 +23,14 @@ export class AddEditCouponComponent {
   @Input() formData: any = [];
   @Input() isEdit: boolean = false;
   couponsForm!: FormGroup;
-  subscription!: any;
+  subscription: Subscription = new Subscription();
   isValid: boolean = false;
   couponId!: number;
 
   constructor(
     private fb: FormBuilder,
     private modalService: CommonModalService,
-    private busService: BusService
+    private couponService: CouponsService
   ) {
     this.couponsForm = this.fb.group({
       couponName: ['', Validators.required],
@@ -48,6 +50,8 @@ export class AddEditCouponComponent {
   }
 
   ngOnInit(): void {
+    this.subscription.unsubscribe();
+    this.subscription = new Subscription();
     if (this.isEdit && this.formData) {
       this.couponId = this.formData.id;
       this.couponsForm.controls['couponName'].patchValue(
@@ -60,21 +64,44 @@ export class AddEditCouponComponent {
         this.formData.maxCharge
       );
       this.couponsForm.controls['discount'].patchValue(this.formData.discount);
+    } else {
+      this.resetForm();
     }
 
-    this.subscription = this.modalService.modalButtonClick$.subscribe(
-      (id: string) => {
+    this.subscription.add(
+      this.modalService.modalButtonClick$.subscribe((id: string) => {
         if (!this.modalService.isModalOpen()) return;
-        switch (id) {
-          case 'add':
-            this.addCoupons();
-            break;
-          case 'edit':
-            this.editCoupon();
-            break;
+
+        if (id === 'add' && !this.isEdit) {
+          this.addCoupons();
+        } else if (id === 'edit' && this.isEdit) {
+          this.editCoupon();
         }
-      }
+      })
     );
+
+    this.subscription.add(
+      this.modalService.modalConfig$.subscribe((config) => {
+        if (config === null) {
+          // Modal has been closed
+          this.resetForm();
+        }
+      })
+    );
+
+    // this.subscription = this.modalService.modalButtonClick$.subscribe(
+    //   (id: string) => {
+    //     if (!this.modalService.isModalOpen()) return;
+    //     switch (id) {
+    //       case 'add':
+    //         this.addCoupons();
+    //         break;
+    //       case 'edit':
+    //         this.editCoupon();
+    //         break;
+    //     }
+    //   }
+    // );
   }
 
   ngOnDestroy(): void {
@@ -98,11 +125,16 @@ export class AddEditCouponComponent {
       discount: Number(this.couponsForm.value.fare_per_kilometer),
     };
 
-    // this.busService.createBusType(formattedData).subscribe((res: any) => {
-    //   if (res.status) {
-    //     this.busService.getAllBusTypes();
-    //   }
-    // });
+    this.couponService.addCoupon(formattedData).subscribe((res: any) => {
+      if (res.status) {
+        this.couponService.getAllCoupons();
+      }
+    });
+
+    this.modalService.hideModal();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   editCoupon(): void {
@@ -118,18 +150,31 @@ export class AddEditCouponComponent {
       maxCharge: Number(this.couponsForm.value.minimum_kilometer),
       discount: Number(this.couponsForm.value.fare_per_kilometer),
     };
-    // this.couponService.updateCoupon(this.couponId, formData).subscribe({
-    //   next: (response: any) => {
-    //     if (response.status) {
-    //       console.log(response.message);
-    //       // Implement toast
-    //       this.busService.getAllBusTypes();
-    //     }
-    //   },
-    //   error: (error: any) => {
-    //     console.error('Update failed', error);
-    //     // Implement toast
-    //   },
-    // });
+
+    this.couponService.updateCoupon(this.couponId, formData).subscribe({
+      next: (response: any) => {
+        if (response.status) {
+          console.log(response.message);
+          // Implement toast
+          this.couponService.getAllCoupons();
+        }
+      },
+      error: (error: any) => {
+        console.error('Update failed', error);
+        // Implement toast
+      },
+    });
+
+    this.modalService.hideModal();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  resetForm(): void {
+    this.couponsForm.reset();
+    this.couponsForm.markAsPristine();
+    this.couponsForm.markAsUntouched();
+    this.isValid = true;
   }
 }

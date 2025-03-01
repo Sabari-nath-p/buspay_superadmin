@@ -18,6 +18,7 @@ import {
   ModalSize,
 } from '../../../shared/models/common-modal.model';
 import { AddEditCouponComponent } from './add-edit-coupon/add-edit-coupon.component';
+import { CouponsService } from '../../../shared/services/coupons/coupons.service';
 
 @Component({
   selector: 'app-coupons',
@@ -73,64 +74,64 @@ export class CouponsComponent {
 
   // couponList: any = [];
 
-  couponList: any = [
-    {
-      id: 'WELCOME100',
-      couponName: 'WELCOME100',
-      minCharge: 100,
-      maxCharge: 150,
-      discount: 10,
-      isActive: true,
-    },
-    {
-      id: 'DECEMBER12',
-      couponName: 'DECEMBER12',
-      minCharge: 100,
-      maxCharge: 150,
-      discount: 10,
-      isActive: true,
-    },
-    {
-      id: 'NEWYEAR2025',
-      couponName: 'NEWYEAR2025',
-      minCharge: 100,
-      maxCharge: 150,
-      discount: 10,
-      isActive: true,
-    },
-    {
-      id: 'SPECIAL150',
-      couponName: 'SPECIAL150',
-      minCharge: 100,
-      maxCharge: 150,
-      discount: 10,
-      isActive: true,
-    },
-    {
-      id: 'BUSPAY100',
-      couponName: 'BUSPAY100',
-      minCharge: 100,
-      maxCharge: 150,
-      discount: 10,
-      isActive: true,
-    },
-    {
-      id: 'STUDENT200',
-      couponName: 'STUDENT200',
-      minCharge: 100,
-      maxCharge: 150,
-      discount: 10,
-      isActive: true,
-    },
-    {
-      id: 'FESTIVAL25',
-      couponName: 'FESTIVAL25',
-      minCharge: 100,
-      maxCharge: 200,
-      discount: 25,
-      isActive: true,
-    },
-  ];
+  couponList: any = [];
+  //   {
+  //     id: 'WELCOME100',
+  //     couponName: 'WELCOME100',
+  //     minCharge: 100,
+  //     maxCharge: 150,
+  //     discount: 10,
+  //     isActive: true,
+  //   },
+  //   {
+  //     id: 'DECEMBER12',
+  //     couponName: 'DECEMBER12',
+  //     minCharge: 100,
+  //     maxCharge: 150,
+  //     discount: 10,
+  //     isActive: true,
+  //   },
+  //   {
+  //     id: 'NEWYEAR2025',
+  //     couponName: 'NEWYEAR2025',
+  //     minCharge: 100,
+  //     maxCharge: 150,
+  //     discount: 10,
+  //     isActive: true,
+  //   },
+  //   {
+  //     id: 'SPECIAL150',
+  //     couponName: 'SPECIAL150',
+  //     minCharge: 100,
+  //     maxCharge: 150,
+  //     discount: 10,
+  //     isActive: true,
+  //   },
+  //   {
+  //     id: 'BUSPAY100',
+  //     couponName: 'BUSPAY100',
+  //     minCharge: 100,
+  //     maxCharge: 150,
+  //     discount: 10,
+  //     isActive: true,
+  //   },
+  //   {
+  //     id: 'STUDENT200',
+  //     couponName: 'STUDENT200',
+  //     minCharge: 100,
+  //     maxCharge: 150,
+  //     discount: 10,
+  //     isActive: true,
+  //   },
+  //   {
+  //     id: 'FESTIVAL25',
+  //     couponName: 'FESTIVAL25',
+  //     minCharge: 100,
+  //     maxCharge: 200,
+  //     discount: 25,
+  //     isActive: true,
+  //   },
+  // ];
 
   gridData!: any;
 
@@ -139,7 +140,7 @@ export class CouponsComponent {
     private fb: FormBuilder,
     private modalService: CommonModalService,
     private alertConfirmService: AlertConfirmService,
-    private busService: BusService
+    private couponService: CouponsService
   ) {
     this.searchForm = this.fb.group({
       searchName: [''],
@@ -199,7 +200,12 @@ export class CouponsComponent {
   ];
 
   ngOnInit() {
+    this.couponService.getAllCoupons();
     this.initializeGridData();
+    this.couponService.couponsList$.subscribe((res:any)=>{
+      this.couponList = res
+      this.initializeGridData();
+    })
   }
 
   initializeGridData(): void {
@@ -218,7 +224,10 @@ export class CouponsComponent {
         height: ModalSize.MEDIUM,
         buttons: this.modalAddButton,
       };
-      this.modalService.showModal(this.addModal);
+      this.modalService.hideModal();
+      setTimeout(() => {
+        this.modalService.showModal(this.addModal);
+      }, 100);
     }, 200);
   }
   editCoupon(data: any): void {
@@ -234,7 +243,10 @@ export class CouponsComponent {
         height: ModalSize.MEDIUM,
         buttons: this.modalEditButton,
       };
-      this.modalService.showModal(this.editModal);
+      this.modalService.hideModal();
+      setTimeout(() => {
+        this.modalService.showModal(this.editModal);
+      }, 100);
     }, 200);
   }
   deleteCoupon(data: any): void {
@@ -253,7 +265,13 @@ export class CouponsComponent {
   }
 
   confirmDelete(data: any): void {
-    console.log('Delete :', data);
+    this.couponService.deleteCoupon(data.id).subscribe((res: any) => {
+      if (res.status) {
+        //toast
+        this.modalService.hideModal();
+        this.couponService.getAllCoupons();
+      }
+    });
   }
 
   onValueChange(event: any): void {

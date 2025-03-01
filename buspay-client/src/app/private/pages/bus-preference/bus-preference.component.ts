@@ -110,7 +110,11 @@ export class BusPreferenceComponent {
         height: ModalSize.SMALL,
         buttons: this.modalAddButton,
       };
-      this.modalService.showModal(this.addModal);
+      // this.modalService.showModal(this.addModal);
+      this.modalService.hideModal();
+      setTimeout(() => {
+        this.modalService.showModal(this.addModal);
+      }, 100);
     }, 200);
   }
 
@@ -127,7 +131,11 @@ export class BusPreferenceComponent {
         height: ModalSize.SMALL,
         buttons: this.modalEditButton,
       };
-      this.modalService.showModal(this.editModal);
+      // this.modalService.showModal(this.editModal);
+      this.modalService.hideModal();
+      setTimeout(() => {
+        this.modalService.showModal(this.editModal);
+      }, 100);
     }, 200);
   }
 
