@@ -1,0 +1,187 @@
+/* login.component.scss */
+$app-brand-primary: #0f67b1;
+$white: #ffffff;
+$light-gray: #f5f5f5;
+$text-dark: #333333;
+$text-gray: #767676;
+
+.login-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: $light-gray;
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+.login-page-content {
+  display: flex;
+  width: 90%;
+  max-width: 1000px;
+  height: 550px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.left-panel {
+  flex: 1;
+  background-color: $app-brand-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .brand-illustration {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    // background-image: url("assets/bus-icon.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.2;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 60%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -10%;
+    left: -10%;
+    width: 60%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+}
+
+.form-container {
+  flex: 1;
+  background-color: $white;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.company-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+    background-color: $app-brand-primary;
+    color: $white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 15px;
+  }
+
+  .company-name {
+    font-size: 24px;
+    font-weight: 600;
+    color: $text-dark;
+  }
+}
+
+h1 {
+  font-size: 28px;
+  color: $text-dark;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.login-subtitle {
+  color: $text-gray;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+app-text-box {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.login-button {
+  background-color: $app-brand-primary;
+  color: $white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 6px rgba(15, 103, 177, 0.2);
+
+  &:hover {
+    background-color: darken($app-brand-primary, 10%);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .login-page-content {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-panel {
+    display: none;
+  }
+
+  .form-container {
+    padding: 30px;
+  }
+
+  .login-form {
+    .button-container {
+      width: 100% !important;
+    }
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  // gap: 8px;
+  width: 100%;
+  height: 100%;
+
+  .login-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    // height: 100%;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 25%;
+    align-self: end;
+  }
+}
