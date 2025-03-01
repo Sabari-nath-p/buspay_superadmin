@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DataGridComponent } from '../../../common-components/data-grid/data-grid.component';
 import { CommonModule } from '@angular/common';
 import { CommonModalService } from '../../../common-components/common-modal/common-modal.service';
+import { SettlementService } from '../../../../shared/services/settlements/settlement.service';
 
 @Component({
   selector: 'app-list-settlements',
@@ -11,60 +12,14 @@ import { CommonModalService } from '../../../common-components/common-modal/comm
   styleUrl: './list-settlements.component.scss',
 })
 export class ListSettlementsComponent {
+  @Input() userId: any;
   gridData!: any;
-  settlementsList: any = [
-    {
-      issueId: '1223234',
-      dueDate: 'DD/MM/YYYY',
-      status: 'Paid',
-      settleDate: '02/07/2023',
-      amount: '₹92.04',
-    },
-    {
-      issueId: '1223234',
-      dueDate: '02/07/2023',
-      status: 'Paid',
-      settleDate: '02/07/2023',
-      amount: '₹92.04',
-    },
-    {
-      issueId: '1223234',
-      dueDate: '02/07/2023',
-      status: 'Pending',
-      settleDate: '02/07/2023',
-      amount: '₹92.04',
-    },
-    {
-      issueId: '1223234',
-      dueDate: '02/07/2023',
-      status: 'Pending',
-      settleDate: '02/07/2023',
-      amount: '₹92.04',
-    },
-    {
-      issueId: '1223234',
-      dueDate: '02/07/2023',
-      status: 'Paid',
-      settleDate: '02/07/2023',
-      amount: '₹92.04',
-    },
-    {
-      issueId: '1667890',
-      dueDate: '05/07/2023',
-      status: 'Pending',
-      settleDate: '09/07/2023',
-      amount: '₹145.78',
-    },
-    {
-      issueId: '1445678',
-      dueDate: '10/07/2023',
-      status: 'Paid',
-      settleDate: '09/07/2023',
-      amount: '₹212.50',
-    },
-  ];
+  settlementsList: any = [];
 
-  constructor(private modalService: CommonModalService) {}
+  constructor(
+    private modalService: CommonModalService,
+    private settlementService: SettlementService
+  ) {}
 
   colDefs: any[] = [
     {
@@ -125,16 +80,26 @@ export class ListSettlementsComponent {
         style: { textAlign: 'center' },
       },
       cellStyle: { textAlign: 'center', fontSize: '16px' },
-      cellRenderer:(item:any)=>{
-        return `${item.value}`
-      }
+      cellRenderer: (item: any) => {
+        return `${item.value}`;
+      },
     },
   ];
 
   ngOnInit(): void {
-    // this.getSettlementsData();
+    this.getSettlementsData();
 
     this.initializeGridData();
+  }
+  getSettlementsData() {
+    this.settlementService
+      .getAllSettlementRequestsByUserId(this.userId)
+      .subscribe((res: any) => {
+        if (res.data) {
+          this.settlementsList = res.data;
+        }
+        this.initializeGridData();
+      });
   }
   initializeGridData() {
     this.gridData = this.settlementsList;

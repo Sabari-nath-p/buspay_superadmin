@@ -9,7 +9,7 @@
 </div> -->
 
 <div class="bus-list-container">
-  <div class="row">
+  <div *ngIf="busList" class="row">
     <div class="col-md-3 col-sm-6 col-12 mb-3" *ngFor="let bus of busList">
       <div class="card h-100 bus-card">
         <div class="card-body d-flex flex-column">
@@ -24,4 +24,9 @@
       </div>
     </div>
   </div>
+  <!-- <div *ngIf="!busList">
+    <div class="d-flex">
+      <em>No Buses Available.</em>
+    </div>
+  </div> -->
 </div>

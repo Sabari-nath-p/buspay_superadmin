@@ -45,5 +45,6 @@ export enum SettleStatus {
 
 export enum ProfileParent{
   USERLIST = 'userList',
-  SETTLEMENT = 'settlement'
+  SETTLEMENT = 'settlement',
+  ONBOARD = 'onboard',
 }

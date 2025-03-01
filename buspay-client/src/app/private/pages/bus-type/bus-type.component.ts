@@ -182,7 +182,12 @@ export class BusTypeComponent {
         height: ModalSize.MEDIUM,
         buttons: this.modalAddButton,
       };
-      this.modalService.showModal(this.addModal);
+      // this.modalService.showModal(this.addModal);
+      // Make sure modal is fully closed before opening a new one
+      this.modalService.hideModal();
+      setTimeout(() => {
+        this.modalService.showModal(this.addModal);
+      }, 100);
     }, 200);
   }
 
@@ -199,7 +204,12 @@ export class BusTypeComponent {
         height: ModalSize.MEDIUM,
         buttons: this.modalEditButton,
       };
-      this.modalService.showModal(this.editModal);
+      // this.modalService.showModal(this.editModal);
+      // Make sure modal is fully closed before opening a new one
+      this.modalService.hideModal();
+      setTimeout(() => {
+        this.modalService.showModal(this.editModal);
+      }, 100);
     }, 200);
   }
 
@@ -222,6 +232,8 @@ export class BusTypeComponent {
     this.busService.deleteBusType(data.id).subscribe((res: any) => {
       if (res.status) {
         console.log(res.message); // Need to implement toast..
+        this.modalService.hideModal();
+        this.busService.getAllBusTypes();
       }
     });
   }

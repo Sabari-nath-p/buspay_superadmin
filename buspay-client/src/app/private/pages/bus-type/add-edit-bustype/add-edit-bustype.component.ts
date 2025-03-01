@@ -9,6 +9,7 @@ import {
 import { TextBoxComponent } from '../../../common-components/text-box/text-box.component';
 import { CommonModalService } from '../../../common-components/common-modal/common-modal.service';
 import { BusService } from '../../../../shared/services/bus/bus.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-bustype',
@@ -21,7 +22,8 @@ export class AddEditBustypeComponent {
   @Input() formData: any = [];
   @Input() isEdit: boolean = false;
   busTypeForm!: FormGroup;
-  subscription!: any;
+  // subscription!: any;
+  subscription: Subscription = new Subscription();
   isValid: boolean = false;
   busTypeId!: number;
 
@@ -48,6 +50,8 @@ export class AddEditBustypeComponent {
   }
 
   ngOnInit(): void {
+    this.subscription.unsubscribe();
+    this.subscription = new Subscription();
     if (this.isEdit && this.formData) {
       this.busTypeId = this.formData.id;
       this.busTypeForm.controls['type'].patchValue(this.formData.type);
@@ -60,21 +64,48 @@ export class AddEditBustypeComponent {
       this.busTypeForm.controls['fare_per_kilometer'].patchValue(
         this.formData.fare_per_kilometer
       );
+    } else {
+      this.resetForm();
     }
 
-    this.subscription = this.modalService.modalButtonClick$.subscribe(
-      (id: string) => {
+    // Add new subscription
+    this.subscription.add(
+      this.modalService.modalButtonClick$.subscribe((id: string) => {
         if (!this.modalService.isModalOpen()) return;
-        switch (id) {
-          case 'add':
-            this.addBustype();
-            break;
-          case 'edit':
-            this.editBustype();
-            break;
+
+        if (id === 'add' && !this.isEdit) {
+          this.addBustype();
+        } else if (id === 'edit' && this.isEdit) {
+          this.editBustype();
         }
-      }
+      })
     );
+
+    // Track modal close to clean up
+    this.subscription.add(
+      this.modalService.modalConfig$.subscribe((config) => {
+        if (config === null) {
+          // Modal has been closed
+          this.resetForm();
+        }
+      })
+    );
+
+    // this.subscription = this.modalService.modalButtonClick$.subscribe(
+    //   (id: string) => {
+    //     if (!this.modalService.isModalOpen()) return;
+    //     switch (id) {
+    //       case 'add':
+    //         this.addBustype();
+    //         break;
+    //       case 'edit':
+    //         this.editBustype();
+    //         break;
+    //     }
+    //   }
+    // );
+
+    //----------------------------------------------------------------------
 
     // this.modalService.modalConfig$.subscribe((config) => {
     //   console.log("Config",config);
@@ -120,8 +151,13 @@ export class AddEditBustypeComponent {
     this.busService.createBusType(formattedData).subscribe((res: any) => {
       if (res.status) {
         this.busService.getAllBusTypes();
+        // Implement toast
       }
     });
+    this.modalService.hideModal();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   editBustype(): void {
@@ -150,11 +186,16 @@ export class AddEditBustypeComponent {
         // Implement toast
       },
     });
+    this.modalService.hideModal();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   resetForm(): void {
     this.busTypeForm.reset();
     this.busTypeForm.markAsPristine();
     this.busTypeForm.markAsUntouched();
+    this.isValid = true;
   }
 }

@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 export class ListBusesComponent {
   @Input() ownerId: number = 0;
 
-  busList: any = [];
+  busList!: any;
 
   constructor(private busService: BusService) {}
 
@@ -24,16 +24,15 @@ export class ListBusesComponent {
     this.busService.getAllBusDetails().subscribe((res: any) => {
       if (res.status) {
         this.busList = res.data.filter((bus: any) => bus.owner_id === ownerId);
-        // if (this.busList && this.busList.bus_type_id) {
-        //   this.busService
-        //     .getBusTypeById(this.busList.bus_type_id)
-        //     .subscribe((busType: any) => {
-        //       if (busType.data) {
-        //         this.busList.push({ bus_type: busType.type });
-        //       }
-        //       console.log(this.busList);
-        //     });
-        // }
+        if (this.busList && this.busList.bus_type_id) {
+          this.busService
+            .getBusTypeById(this.busList.bus_type_id)
+            .subscribe((busType: any) => {
+              if (busType.data) {
+                this.busList.push({ bus_type: busType.type });
+              }
+            });
+        }
         this.getBustype();
       }
     });
@@ -49,7 +48,6 @@ export class ListBusesComponent {
               if (busType.data) {
                 x.bus_type = busType.data.type;
               }
-              console.log(this.busList);
             });
         }
       });

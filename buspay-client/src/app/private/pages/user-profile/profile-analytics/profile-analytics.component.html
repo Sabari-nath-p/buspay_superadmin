@@ -1,1 +1,33 @@
-<p>profile-analytics works!</p>
+<div class="profile-analytics_container">
+  <div *ngIf="analytics" class="row">
+    <div *ngIf="analytics.total_overall_collection != null" class="col-md-3">
+      <app-analytics-card
+        [title]="'Total Earnings'"
+        [analyticValue]="'₹' + analytics.total_overall_collection"
+      ></app-analytics-card>
+    </div>
+    <div *ngIf="analytics.wallet_balance != null" class="col-md-3">
+      <app-analytics-card
+        [title]="'Wallet Balance'"
+        [analyticValue]="
+          analytics.wallet_balance > 0
+            ? '₹' + analytics.wallet_balance
+            : '₹' + '0'
+        "
+      ></app-analytics-card>
+    </div>
+    <div *ngIf="analytics.total_tickets != null" class="col-md-3">
+      <app-analytics-card
+        [title]="'Total Tickets Sold'"
+        [analyticValue]="analytics.total_tickets"
+      ></app-analytics-card>
+    </div>
+
+    <div *ngIf="analytics.total_trip != null" class="col-md-3">
+      <app-analytics-card
+        [title]="'Total Trips'"
+        [analyticValue]="analytics.total_trip"
+      ></app-analytics-card>
+    </div>
+  </div>
+</div>

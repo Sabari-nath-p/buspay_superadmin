@@ -21,31 +21,34 @@ export class UsersService {
     });
   }
 
+  getBusOwners(): Observable<any> {
+    const route = 'user?role=bus_owner';
+
+    return this.httpClientService.get(route);
+  }
   getUserById(userId: number) {
     return this.httpClientService.get('user', userId);
   }
 
-  changeUserStatus(userId: number, status: string) {
+  changeUserStatus(userId: number, status: string): Observable<any> {
     const route = `user/${userId}/change-status`;
     const params = {
       status: status,
     };
-    this.httpClientService.post(route, params).subscribe((res) => {
-      if (res.statusCode === StatusCode.NotFound) {
-        console.log(res.message);
-      }
-      if (res.statusCode === StatusCode.Success) {
-        console.log(res.message);
-      }
-    });
+    return this.httpClientService.post(route, params);
   }
 
-  changeSettlementStatus(userId: number, status: string):Observable<any> {
+  changeSettlementStatus(userId: number, status: string): Observable<any> {
     const route = `settle-requests/${userId}/change-status`;
     const params = {
       status: status,
     };
-    return this.httpClientService.post(route, params)
+    return this.httpClientService.post(route, params);
   }
 
+  getConductorsByBusOwnerId(busOwnerId: any): Observable<any> {
+    const route = `user/list-conductors?bus_owner_id=${busOwnerId}`;
+    // `dashboard/bus-owner-analytics?bus_owner_id=${userId}`
+    return this.httpClientService.get(route);
+  }
 }

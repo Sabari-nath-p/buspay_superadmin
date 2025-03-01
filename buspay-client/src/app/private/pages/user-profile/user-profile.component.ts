@@ -14,13 +14,15 @@ import {
   ProfileParent,
   SettleStatus,
   StatusCode,
+  UserStatus,
 } from '../../../core/utilities/buspay.enums';
 import { AvatarService } from '../../../shared/services/avatar.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ListBusesComponent } from './list-buses/list-buses.component';
 import { ListConductorsComponent } from './list-conductors/list-conductors.component';
 import { ListSettlementsComponent } from './list-settlements/list-settlements.component';
 import { ProfileAnalyticsComponent } from './profile-analytics/profile-analytics.component';
+import { AlertConfirmService } from '../../common-components/alert-confirm/alert-confirm.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -61,7 +63,9 @@ export class UserProfileComponent {
     private cdr: ChangeDetectorRef,
     private userService: UsersService,
     private avatarsService: AvatarService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alertConfirmService: AlertConfirmService,
+    private router: Router,
   ) {}
   ngOnInit(): void {
     const navigation = history.state;
@@ -116,17 +120,30 @@ export class UserProfileComponent {
 
   onApprove(): void {
     this.userService
-      .changeSettlementStatus(this.userId, SettleStatus.APPROVED)
+      .changeUserStatus(this.userId, UserStatus.ACTIVE)
       .subscribe((res: any) => {
-        console.log('Status change : ', res);
+        console.log('Status change : ', res.message);
+        this.router.navigate(['/dashboard']);
       });
   }
 
   onRejected(): void {
-    this.userService
-      .changeSettlementStatus(this.userId, SettleStatus.REJECTED)
-      .subscribe((res: any) => {
-        console.log('Status change : ', res);
+    this.alertConfirmService
+      .confirm(
+        'Confirmation',
+        'Are you sure you want to decline this owner?',
+        'Yes',
+        'Cancel'
+      )
+      .then((isConfirmed: boolean) => {
+        if (isConfirmed) {
+          this.userService
+            .changeUserStatus(this.userId, UserStatus.PENDING)
+            .subscribe((res: any) => {
+              console.log('Status change : ', res.message);
+              this.router.navigate(['/dashboard']);
+            });
+        }
       });
   }
 }
