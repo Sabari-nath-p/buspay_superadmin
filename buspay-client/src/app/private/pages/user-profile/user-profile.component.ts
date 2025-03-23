@@ -23,6 +23,7 @@ import { ListConductorsComponent } from './list-conductors/list-conductors.compo
 import { ListSettlementsComponent } from './list-settlements/list-settlements.component';
 import { ProfileAnalyticsComponent } from './profile-analytics/profile-analytics.component';
 import { AlertConfirmService } from '../../common-components/alert-confirm/alert-confirm.service';
+import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -66,6 +67,7 @@ export class UserProfileComponent {
     private route: ActivatedRoute,
     private alertConfirmService: AlertConfirmService,
     private router: Router,
+    private toastService: ToastService
   ) {}
   ngOnInit(): void {
     const navigation = history.state;
@@ -99,14 +101,12 @@ export class UserProfileComponent {
   getUserDetailsById(userId: number) {
     this.userService.getUserById(userId).subscribe((res) => {
       if (res.statusCode === StatusCode.Success) {
-        //console.log('User : ', res.data);
         this.userDetails = res.data;
       }
     });
   }
 
   onSelectionChanged(event: any) {
-    console.log(event);
     this.currentTab = event;
   }
 
@@ -122,7 +122,7 @@ export class UserProfileComponent {
     this.userService
       .changeUserStatus(this.userId, UserStatus.ACTIVE)
       .subscribe((res: any) => {
-        console.log('Status change : ', res.message);
+        this.toastService.success(res.message);
         this.router.navigate(['/dashboard']);
       });
   }
@@ -140,7 +140,7 @@ export class UserProfileComponent {
           this.userService
             .changeUserStatus(this.userId, UserStatus.PENDING)
             .subscribe((res: any) => {
-              console.log('Status change : ', res.message);
+              this.toastService.success(res.message);
               this.router.navigate(['/dashboard']);
             });
         }

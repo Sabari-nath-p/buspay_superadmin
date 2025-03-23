@@ -17,6 +17,7 @@ import {
   ModalSize,
 } from '../../../shared/models/common-modal.model';
 import { AddEditPreferenceComponent } from './add-edit-preference/add-edit-preference.component';
+import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-bus-preference',
@@ -74,7 +75,8 @@ export class BusPreferenceComponent {
     private fb: FormBuilder,
     private modalService: CommonModalService,
     private alertConfirmService: AlertConfirmService,
-    private busService: BusService
+    private busService: BusService,
+    private toastService: ToastService
   ) {
     this.searchForm = this.fb.group({
       searchName: [''],
@@ -157,7 +159,7 @@ export class BusPreferenceComponent {
   confirmDelete(data: any): void {
     this.busService.deleteBusPreference(data.id).subscribe((res: any) => {
       if (res.status) {
-        console.log(res.message); // Need to implement toast..
+        this.toastService.success(res.message);
         this.getAllBusPreferences();
       }
     });

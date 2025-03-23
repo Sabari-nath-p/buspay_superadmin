@@ -1,0 +1,38 @@
+<div class="settlements-list-container">
+  <div class="settlements-search-container">
+    <h2 class="col-6">Settlement Requests</h2>
+
+    <form class="search-container" [formGroup]="searchForm">
+      <app-text-box
+        class=""
+        formControlName="searchName"
+        [iconClass]="'pi pi-search'"
+        [placeholder]="'Search by name..'"
+        (onValueChanged)="onValueChange($event)"
+      />
+      <!-- <button class="btn" (click)="createBusType()">ADD</button> -->
+    </form>
+  </div>
+  <div class="settlements-list">
+    <app-data-grid
+      [rowData]="gridData"
+      [colDefs]="colDefs"
+      [pagination]="true"
+      [paginationPageSizeSelector]="[5, 10, 100]"
+    ></app-data-grid>
+  </div>
+</div>
+
+<app-common-modal></app-common-modal>
+
+<ng-template #viewSettlementsTemplate>
+  <!-- <app-add-edit-bustype></app-add-edit-bustype> -->
+  View settlements
+</ng-template>
+
+<!-- <ng-template #editBusTypeTemplate>
+    <app-add-edit-bustype
+      [formData]="selectedBusType"
+      [isEdit]="true"
+    ></app-add-edit-bustype>
+  </ng-template> -->

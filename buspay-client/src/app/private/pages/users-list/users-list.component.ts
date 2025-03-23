@@ -193,7 +193,6 @@ export class UsersListComponent {
   ngOnInit(): void {
     this.userService.getBusOwners().subscribe((res: any) => {
       if (res.data) {
-        console.log('users', res.data);
         this.userList = res.data;
         this.gridData = res.data;
       }
@@ -214,7 +213,6 @@ export class UsersListComponent {
     this.initializeGridData();
 
     this.selectedUser$.subscribe((user: any) => {
-      console.log('User data changed:', user);
       this.selectedUser = user;
       this.cdRef.detectChanges();
     });

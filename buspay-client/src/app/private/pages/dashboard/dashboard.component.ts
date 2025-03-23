@@ -10,8 +10,6 @@ import { DataGridComponent } from '../../common-components/data-grid/data-grid.c
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TextBoxComponent } from '../../common-components/text-box/text-box.component';
 import { CommonModule } from '@angular/common';
-import { ModalSize } from '../../../shared/models/common-modal.model';
-import { CommonModalService } from '../../common-components/common-modal/common-modal.service';
 import { CommonModalComponent } from '../../common-components/common-modal/common-modal.component';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { Router } from '@angular/router';
@@ -47,7 +45,6 @@ export class DashboardComponent {
 
   constructor(
     private fb: FormBuilder,
-    private modalService: CommonModalService,
     private cdRef: ChangeDetectorRef,
     private router: Router,
     private userService: UsersService
@@ -108,7 +105,6 @@ export class DashboardComponent {
   initializeGridData(): void {
     this.userService.getAllUsers();
     this.userService.usersList$.subscribe((res: any) => {
-      console.log(res);
       if (res) {
         let users = res;
         this.onBoardList = users.filter(

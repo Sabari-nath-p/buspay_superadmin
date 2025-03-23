@@ -10,6 +10,7 @@ import { TextBoxComponent } from '../../../common-components/text-box/text-box.c
 import { BusService } from '../../../../shared/services/bus/bus.service';
 import { CommonModalService } from '../../../common-components/common-modal/common-modal.service';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { ToastService } from '../../../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-add-edit-preference',
@@ -29,7 +30,8 @@ export class AddEditPreferenceComponent {
   constructor(
     private fb: FormBuilder,
     private modalService: CommonModalService,
-    private busService: BusService
+    private busService: BusService,
+    private toastService: ToastService
   ) {
     this.preferenceForm = this.fb.group({
       name: ['', Validators.required],
@@ -42,7 +44,7 @@ export class AddEditPreferenceComponent {
     if (this.isEdit && this.formData) {
       this.preferenceId = this.formData.id;
       this.preferenceForm.controls['name'].patchValue(this.formData.name);
-    }else{
+    } else {
       this.resetForm();
     }
 
@@ -106,6 +108,7 @@ export class AddEditPreferenceComponent {
       if (res.status) {
         this.busService.getAllBusPreferences();
         // Implement toast
+        this.toastService.success(res.message);
       }
     });
     this.modalService.hideModal();
@@ -126,14 +129,12 @@ export class AddEditPreferenceComponent {
     this.busService.updateBusPreference(this.preferenceId, formData).subscribe({
       next: (response: any) => {
         if (response.status) {
-          console.log(response.message);
-          // Implement toast
+          this.toastService.success(response.message);
           this.busService.getAllBusPreferences();
         }
       },
       error: (error: any) => {
-        console.error('Update failed', error);
-        // Implement toast
+        this.toastService.error('Preference updation failed!');
       },
     });
     this.modalService.hideModal();
@@ -142,8 +143,8 @@ export class AddEditPreferenceComponent {
     }
   }
 
-  resetForm():void {
-    this.preferenceForm.reset()
+  resetForm(): void {
+    this.preferenceForm.reset();
     this.preferenceForm.markAsPristine();
     this.preferenceForm.markAsUntouched();
     this.isValid = true;

@@ -10,6 +10,7 @@ import { TextBoxComponent } from '../../../common-components/text-box/text-box.c
 import { CommonModalService } from '../../../common-components/common-modal/common-modal.service';
 import { BusService } from '../../../../shared/services/bus/bus.service';
 import { Subscription } from 'rxjs';
+import { ToastService } from '../../../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-add-edit-bustype',
@@ -30,7 +31,8 @@ export class AddEditBustypeComponent {
   constructor(
     private fb: FormBuilder,
     private modalService: CommonModalService,
-    private busService: BusService
+    private busService: BusService,
+    private toastService: ToastService
   ) {
     this.busTypeForm = this.fb.group({
       type: ['', Validators.required],
@@ -152,6 +154,7 @@ export class AddEditBustypeComponent {
       if (res.status) {
         this.busService.getAllBusTypes();
         // Implement toast
+        this.toastService.success(res.message);
       }
     });
     this.modalService.hideModal();
@@ -176,14 +179,12 @@ export class AddEditBustypeComponent {
     this.busService.updateBusType(this.busTypeId, formData).subscribe({
       next: (response: any) => {
         if (response.status) {
-          console.log(response.message);
-          // Implement toast
+          this.toastService.success(response.message);
           this.busService.getAllBusTypes();
         }
       },
       error: (error: any) => {
-        console.error('Update failed', error);
-        // Implement toast
+        this.toastService.success('Bus type update failed!');
       },
     });
     this.modalService.hideModal();

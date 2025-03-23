@@ -19,6 +19,7 @@ import { CommonModalComponent } from '../../common-components/common-modal/commo
 import { AddEditBustypeComponent } from './add-edit-bustype/add-edit-bustype.component';
 import { AlertConfirmService } from '../../common-components/alert-confirm/alert-confirm.service';
 import { BusService } from '../../../shared/services/bus/bus.service';
+import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-bus-type',
@@ -39,8 +40,8 @@ export class BusTypeComponent {
   addBusTypeTemplate!: TemplateRef<any>;
   @ViewChild('editBusTypeTemplate', { static: false })
   editBusTypeTemplate!: TemplateRef<any>;
-  @ViewChild('test', { static: false })
-  test!: AddEditBustypeComponent;
+  // @ViewChild('test', { static: false })
+  // test!: AddEditBustypeComponent;
 
   searchForm!: FormGroup;
   selectedBusType!: any;
@@ -84,7 +85,8 @@ export class BusTypeComponent {
     private fb: FormBuilder,
     private modalService: CommonModalService,
     private alertConfirmService: AlertConfirmService,
-    private busService: BusService
+    private busService: BusService,
+    private toastService: ToastService
   ) {
     this.searchForm = this.fb.group({
       searchName: [''],
@@ -231,7 +233,7 @@ export class BusTypeComponent {
   confirmDelete(data: any): void {
     this.busService.deleteBusType(data.id).subscribe((res: any) => {
       if (res.status) {
-        console.log(res.message); // Need to implement toast..
+        this.toastService.success(res.message);
         this.modalService.hideModal();
         this.busService.getAllBusTypes();
       }

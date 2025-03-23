@@ -8,10 +8,8 @@ import { Observable } from 'rxjs';
 export class SettlementService {
   constructor(private httpClientService: HttpClientService) {}
 
-  getAllSettlementRequests() {
-    this.httpClientService.get('settle-requests').subscribe((res) => {
-      console.log(res);
-    });
+  getAllSettlementRequests(): Observable<any> {
+    return this.httpClientService.get('settle-requests');
   }
 
   getAllSettlementRequestsByUserId(userId: any): Observable<any> {
