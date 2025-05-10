@@ -1,0 +1,32 @@
+<div>
+    <form class="bustype-form" [formGroup]="busTypeForm">
+      <div class="add-edit-fields">
+        <label>BUS TYPE</label>
+        <app-text-box
+          [placeholder]="'Bus Type..'"
+          formControlName="busType"
+        ></app-text-box>
+      </div>
+      <div class="add-edit-fields">
+        <label>FARE KM</label>
+        <app-text-box
+          [placeholder]="'Fare KM..'"
+          formControlName="fareKm"
+        ></app-text-box>
+      </div>
+      <div class="add-edit-fields">
+        <label>MINIMUM CHARGE</label>
+        <app-text-box
+          [placeholder]="'Minimum Charge..'"
+          formControlName="minCharge"
+        ></app-text-box>
+      </div>
+      <div class="add-edit-fields">
+        <label>FARE PER KM</label>
+        <app-text-box
+          [placeholder]="'Fare per Km'"
+          formControlName="farePerKm"
+        ></app-text-box>
+      </div>
+    </form>
+  </div>

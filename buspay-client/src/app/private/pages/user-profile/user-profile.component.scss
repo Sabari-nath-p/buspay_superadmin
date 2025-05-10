@@ -1,0 +1,86 @@
+@import "../../../../styles/theme";
+@import "../../../../styles/variables";
+
+.user-profile-wrapper {
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 8px;
+  height: 100%;
+  width: 100%;
+
+  .profile-container {
+    // .profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .profile-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 10px;
+
+      .profile-contact {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .address-account-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .address-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .account-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        // width: 30%;
+        max-width: 50%;
+        min-width: 30%;
+
+        outline: 2px solid rgb(0, 0, 0, 0.1);
+        padding: 8px;
+
+        .accno-ifsc,
+        .bank-upi {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 6px;
+        }
+      }
+    }
+  }
+
+  //   .tabs-container {
+  //   }
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  margin-block: 8px;
+}
+
+.avatar {
+  img {
+    width: 60px;
+    height: 60px;
+    // border-radius: 50%; // circle avatar
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid $border-color;
+  }
+}

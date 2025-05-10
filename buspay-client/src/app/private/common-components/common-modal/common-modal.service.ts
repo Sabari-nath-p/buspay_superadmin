@@ -10,6 +10,8 @@ export class CommonModalService {
     content: any;
     isHeaderRequired: boolean;
     isFooterRequired: boolean;
+    width?: string;
+    height?: string;
   } | null>(null);
 
   modalConfig$ = this.modalConfig.asObservable();
@@ -19,12 +21,16 @@ export class CommonModalService {
     content: any;
     isHeaderRequired?: boolean;
     isFooterRequired?: boolean;
+    width?: string;
+    height?: string;
   }) {
     this.modalConfig.next({
       heading: config.heading,
       content: config.content,
-      isHeaderRequired: config.isHeaderRequired ?? true,
-      isFooterRequired: config.isFooterRequired ?? true,
+      isHeaderRequired: config.isHeaderRequired ? true : false,
+      isFooterRequired: config.isFooterRequired ? true : false,
+      width: config.width,
+      height: config.height
     });
   }
 

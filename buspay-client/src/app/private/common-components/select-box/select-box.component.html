@@ -1,0 +1,14 @@
+<div class="custom-dropdown-wrapper">
+  <select
+    [value]="value"
+    (change)="onSelectionChange($event)"
+    class="custom-dropdown"
+  >
+    <option value="" [disabled]="true" [selected]="!value" class="placeholder">
+      {{ placeholder }}
+    </option>
+    <option *ngFor="let item of dataSource" [value]="getValue(item)">
+      {{ getDisplayValue(item) }}
+    </option>
+  </select>
+</div>

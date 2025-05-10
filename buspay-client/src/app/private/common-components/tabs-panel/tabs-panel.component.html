@@ -1,0 +1,13 @@
+<tabset>
+  <tab
+    *ngFor="let tab of tabs"
+    (selectTab)="selectedTab(tab.id)"
+    heading="{{ tab.heading }}"
+    id="{{ tab.id }}"
+  >
+  </tab>
+  <ng-container
+    *ngIf="selectedTemplate"
+    [ngTemplateOutlet]="selectedTemplate"
+  ></ng-container>
+</tabset>

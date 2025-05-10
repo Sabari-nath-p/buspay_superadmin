@@ -24,3 +24,14 @@
 <div class="row">
   <app-time-line></app-time-line>
 </div>
+
+<div>
+  <app-data-grid
+    [rowData]="rowData"
+    [colDefs]="colDefs"
+    [isExported]="true"
+    [exportLabel]="'SAVE'"
+    [pagination]="true"
+    [paginationPageSizeSelector]="[5, 10, 100]"
+  ></app-data-grid>
+</div>

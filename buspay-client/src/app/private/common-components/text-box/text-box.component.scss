@@ -1,0 +1,18 @@
+@import "../../../../styles/theme.scss";
+@import "../../../../styles/variables";
+
+.app-c-text-box {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  background: $app-cover-bg;
+  input {
+    width: 100%;
+    background: $app-cover-bg;
+    color: $form-label-hint;
+    outline: none;
+    border: none;
+  }
+}

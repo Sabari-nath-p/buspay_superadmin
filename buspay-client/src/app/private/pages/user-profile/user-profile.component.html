@@ -1,0 +1,79 @@
+<div class="user-profile-wrapper">
+  <div class="profile-container">
+    <!-- <h2>Owner Profile</h2> -->
+    <!-- <div class="profile-details"> -->
+    <!-- header Profile image logic-->
+    <div class="user-info"></div>
+    <div class="profile-section">
+      <div class="avatar" *ngIf="userDetails.name">
+        <img [src]="userProfileImage" alt="User Avatar" />
+        <span>
+          {{ userDetails.name }}
+        </span>
+      </div>
+      <div class="profile-contact">
+        <span>
+          {{ userDetails.phone }}
+        </span>
+        <span>
+          {{ userDetails.email }}
+        </span>
+        <span>
+          {{ userDetails.website }}
+        </span>
+      </div>
+      <div>
+        <span *ngIf="parentScreen == Parent.USERLIST">
+          {{ userDetails.status }}</span
+        >
+        <span *ngIf="parentScreen == Parent.SETTLEMENT">Pending</span>
+      </div>
+    </div>
+    <div class="address-account-container">
+      <div class="address-section">
+        <div>Address: {{ userDetails.address }}</div>
+        <div>District: {{ userDetails.district }}</div>
+      </div>
+      <div class="account-details">
+        <div>
+          <div class="accno-ifsc">
+            <div>Account Number : {{ userDetails.acc }}</div>
+            <div>IFSC : {{ userDetails.ifsc }}</div>
+          </div>
+          <div class="bank-upi">
+            <div>Bank Name: {{ userDetails.bank_name }}</div>
+            <div>UPI ID: {{ userDetails.upi }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+  </div>
+  <div class="tabs-container" *ngIf="parentScreen == Parent.USERLIST">
+    <app-tabs-panel
+      *ngIf="profileTabs"
+      [tabs]="profileTabs"
+      (tabSelected)="onSelectionChanged($event)"
+    ></app-tabs-panel>
+  </div>
+  <div *ngIf="parentScreen == Parent.SETTLEMENT">
+    <hr />
+    <div class="action-buttons">
+      <button type="button" class="btn btn-secondary">Decline</button>
+      <button type="button" class="btn btn-primary">Approve</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #analyticsTab>
+  <div>Analytics Content</div>
+</ng-template>
+<ng-template #busesTab>
+  <div>buses Content</div>
+</ng-template>
+<ng-template #conductorsTab>
+  <div>conductorsTab Content</div>
+</ng-template>
+<ng-template #settlementsTab>
+  <div>settlementsTab Content</div>
+</ng-template>

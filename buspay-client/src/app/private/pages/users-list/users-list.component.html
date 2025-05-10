@@ -1,1 +1,53 @@
-<p>users-list works!</p>
+<div class="users-list-container">
+  <div class="users-search-container">
+    <h2 class="col-6">Users</h2>
+    <!-- <div class="search-container"> -->
+    <!-- <div class="row"> -->
+    <form class="search-container" [formGroup]="searchForm">
+      <app-text-box
+        class=""
+        formControlName="searchName"
+        [iconClass]="'pi pi-search'"
+        [placeholder]="'Search by name..'"
+      />
+      <app-select-box
+        class=""
+        formControlName="selectedDistrict"
+        [dataSource]="districts"
+        valueExpression="id"
+        displayExpression="name"
+        [placeholder]="'Select district..'"
+      ></app-select-box>
+      <button class="btn" (click)="searchUser()">Search</button>
+    </form>
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
+  <div class="users-list">
+    <app-data-grid
+      [rowData]="gridData"
+      [colDefs]="colDefs"
+      [pagination]="true"
+      [paginationPageSizeSelector]="[5, 10, 100]"
+    ></app-data-grid>
+  </div>
+</div>
+
+<app-common-modal
+  [isHeaderRequired]="true"
+  [isFooterRequired]="true"
+  [content]="userProfile"
+  [heading]="selectedUser ? selectedUser.name : 'User Profile'"
+></app-common-modal>
+<ng-template #userProfile>
+  <app-user-profile
+    *ngIf="selectedUser"
+    [userDetails]="selectedUser"
+    [parentScreen]="'userList'"
+  ></app-user-profile>
+</ng-template>
+
+<app-user-profile
+  *ngIf="selectedUser"
+  [userDetails]="selectedUser"
+></app-user-profile>
