@@ -1,7 +1,7 @@
 <div class="form-control app-c-text-box">
   <span *ngIf="iconClass.length" [class]="iconClass"></span>
   <input
-    type="text"
+    [type]="type"
     [placeholder]="placeholder"
     [(ngModel)]="value"
     (ngModelChange)="onChange($event)"

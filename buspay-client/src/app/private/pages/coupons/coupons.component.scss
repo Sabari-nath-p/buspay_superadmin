@@ -1,0 +1,66 @@
+@import "../../../../styles/theme.scss";
+@import "../../../../styles/variables";
+
+.coupon-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  height: 100%;
+  // box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+  .type-search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    background: $white;
+    // background: black;
+    padding-inline: 16px;
+    padding-block: 24px;
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      padding: 0;
+      font-weight: $font-weight-bold;
+    }
+    .search-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      align-items: center;
+
+      app-text-box {
+        width: 100%;
+      }
+
+      button {
+        background: $app-brand-primary;
+        color: $white;
+        outline: none;
+        width: 20%;
+      }
+    }
+  }
+
+  .coupon-list {
+    background: $white;
+    border-radius: 10px;
+    padding:12px;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+::ng-deep .action-button {
+  background: $app-brand-primary;
+  color: $white;
+  outline: none;
+
+  &:hover {
+    background: $app-brand-primary;
+    color: $white;
+  }
+}

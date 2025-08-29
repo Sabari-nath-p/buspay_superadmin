@@ -26,7 +26,9 @@
         <span *ngIf="parentScreen == Parent.USERLIST">
           {{ userDetails.status }}</span
         >
-        <span *ngIf="parentScreen == Parent.SETTLEMENT">Pending</span>
+        <span *ngIf="parentScreen == Parent.ONBOARD">{{
+          userDetails.status
+        }}</span>
       </div>
     </div>
     <div class="address-account-container">
@@ -56,24 +58,28 @@
       (tabSelected)="onSelectionChanged($event)"
     ></app-tabs-panel>
   </div>
-  <div *ngIf="parentScreen == Parent.SETTLEMENT">
+  <div *ngIf="parentScreen == Parent.ONBOARD">
     <hr />
     <div class="action-buttons">
-      <button type="button" class="btn btn-secondary">Decline</button>
-      <button type="button" class="btn btn-primary">Approve</button>
+      <button type="button" class="btn btn-secondary" (click)="onRejected()">
+        Reject
+      </button>
+      <button type="button" class="btn btn-primary" (click)="onApprove()">
+        Approve
+      </button>
     </div>
   </div>
 </div>
 
 <ng-template #analyticsTab>
-  <div>Analytics Content</div>
+  <app-profile-analytics [userId]="userId"></app-profile-analytics>
 </ng-template>
 <ng-template #busesTab>
-  <div>buses Content</div>
+  <app-list-buses [ownerId]="userId"></app-list-buses>
 </ng-template>
 <ng-template #conductorsTab>
-  <div>conductorsTab Content</div>
+  <app-list-conductors [busOwnerId]="userId"></app-list-conductors>
 </ng-template>
 <ng-template #settlementsTab>
-  <div>settlementsTab Content</div>
+  <app-list-settlements [userId]="userId"></app-list-settlements>
 </ng-template>

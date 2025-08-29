@@ -32,6 +32,7 @@ import {
   ],
 })
 export class TextBoxComponent implements ControlValueAccessor {
+  @Input() type: string = 'text';
   @Input() control!: AbstractControl;
   @Input() placeholder: string = '';
   @Input() iconClass: string = '';

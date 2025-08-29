@@ -1,8 +1,7 @@
-
 ::ng-deep .ag-theme-quartz,
 .ag-theme-quartz-dark,
 .ag-theme-quartz-auto-dark {
-  --ag-grid-size: 10px;
+  --ag-grid-size: 10px !important;
 }
 
 ::ng-deep .ag-header-cell-sortable .ag-header-cell-label {

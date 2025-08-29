@@ -6,6 +6,7 @@ import { BusTypeComponent } from './pages/bus-type/bus-type.component';
 import { BusPreferenceComponent } from './pages/bus-preference/bus-preference.component';
 import { CouponsComponent } from './pages/coupons/coupons.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { SettlementsListComponent } from './pages/settlements-list/settlements-list.component';
 
 export const privateRoutes: Routes = [
   {
@@ -17,10 +18,12 @@ export const privateRoutes: Routes = [
       { path: 'users', component: UsersListComponent },
       { path: 'bus-type', component: BusTypeComponent },
       { path: 'preferences', component: BusPreferenceComponent },
+      { path: 'settlements', component: SettlementsListComponent },
       { path: 'coupons', component: CouponsComponent },
-      { path: 'integrations', component: DashboardComponent },
       { path: 'settings', component: DashboardComponent },
-      { path: 'profile', component: UserProfileComponent },
+      { path: 'integrations', component: DashboardComponent },
+      // { path: 'profile', component: UserProfileComponent },
+      { path: 'profile/:id', component: UserProfileComponent },
     ],
   },
 ];

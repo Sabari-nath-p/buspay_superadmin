@@ -1,0 +1,21 @@
+<div>
+  <form class="preference-form" [formGroup]="preferenceForm">
+    <div class="add-edit-fields">
+      <label>Preference</label>
+      <app-text-box
+        [placeholder]="'Preference..'"
+        formControlName="name"
+      ></app-text-box>
+      <span
+        *ngIf="
+          !isValid &&
+          preferenceForm.controls['name'].hasError('require') &&
+          preferenceForm.controls['name'].touched
+        "
+        class="text-danger"
+      >
+        Required
+      </span>
+    </div>
+  </form>
+</div>

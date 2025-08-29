@@ -6,6 +6,15 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 12px;
+  // box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+  .bustype-list{
+    background: $white;
+    border-radius:10px;
+    padding:12px;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .type-search-container {
@@ -19,6 +28,7 @@
   padding-block: 24px;
   border-radius: 10px;
   align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 
   h2 {
     padding: 0;
@@ -50,5 +60,6 @@
 
   &:hover {
     background: $app-brand-primary;
+    color: $white;
   }
 }

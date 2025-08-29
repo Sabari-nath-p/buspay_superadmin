@@ -1,3 +1,5 @@
+<div class="dashboard-container">
+  
 <div class="row">
   <app-analytics-card
     class="col-md-4"
@@ -21,7 +23,32 @@
   ></app-analytics-card>
 </div>
 
-<div class="row">
+<div class="onboard-list-container">
+  <div class="type-search-container">
+    <h2 class="col-6">Onboard Request</h2>
+
+    <form class="search-container" [formGroup]="searchForm">
+      <app-text-box
+        class=""
+        formControlName="searchName"
+        [iconClass]="'pi pi-search'"
+        [placeholder]="'Search by name, email or others..'"
+        (onValueChanged)="onValueChange($event)"
+      />
+      <!-- <button class="btn" (click)="createBusType()">ADD</button> -->
+    </form>
+  </div>
+  <div class="onboard-list">
+    <app-data-grid
+      [rowData]="gridData"
+      [colDefs]="colDefs"
+      [pagination]="true"
+      [paginationPageSizeSelector]="[5, 10, 100]"
+    ></app-data-grid>
+  </div>
+</div>
+
+<!-- <div class="row">
   <app-time-line></app-time-line>
 </div>
 
@@ -34,4 +61,25 @@
     [pagination]="true"
     [paginationPageSizeSelector]="[5, 10, 100]"
   ></app-data-grid>
+</div> -->
+
 </div>
+
+<app-common-modal
+  [isHeaderRequired]="true"
+  [isFooterRequired]="true"
+  [content]="userProfile"
+  [heading]="selectedUser ? selectedUser.name : 'Request'"
+></app-common-modal>
+<ng-template #userProfile>
+  <app-user-profile
+    *ngIf="selectedUser"
+    [userDetails]="selectedUser"
+    [parentScreen]="'userList'"
+  ></app-user-profile>
+</ng-template>
+
+<app-user-profile
+  *ngIf="selectedUser"
+  [userDetails]="selectedUser"
+></app-user-profile>

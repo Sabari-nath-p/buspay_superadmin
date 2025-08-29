@@ -6,3 +6,12 @@ export enum ModalSize {
   FULL_WIDTH = '95vw',
   FULL_HEIGHT = '90vh',
 }
+
+export interface ModalButton {
+  id: string;
+  label: string;
+  class?: string;
+  callback?: () => void;
+  show?: boolean;
+  disabled?: boolean;
+}

@@ -1,31 +1,35 @@
+<!-- login.component.html -->
 <div class="login-page-container">
   <div class="login-page-content">
-    <div class="company-image"></div>
+    <div class="left-panel">
+      <div class="brand-illustration"></div>
+    </div>
     <div class="form-container">
       <div class="company-logo">
-        <!-- img src -->
+        <div class="logo-icon">BP</div>
         <div class="company-name">BusPay Admin</div>
       </div>
-      <!-- <ng-container *ngIf="showLoginForm; else registerForm">
-        <app-login-form ></app-login-form>
-      </ng-container> -->
-      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-        <div class="row">
-          <div class="col-md-6">
+
+      <h1>Welcome Back</h1>
+      <p class="login-subtitle">Please login to access your dashboard</p>
+
+      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="login-fields">
+          <div class="">
             <app-text-box
               [placeholder]="'Email'"
               formControlName="email"
             ></app-text-box>
+          </div>
+          <div>
             <app-text-box
               [placeholder]="'Password'"
               formControlName="password"
             ></app-text-box>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-4">
-            <input type="submit" value="Login" />
-          </div>
+        <div class="button-container">
+          <button type="submit" class="login-button">Login</button>
         </div>
       </form>
     </div>

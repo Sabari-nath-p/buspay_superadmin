@@ -1,13 +1,16 @@
-<button *ngIf="isExported" (click)="onExportClick()">{{ exportLabel }}</button>
-<ag-grid-angular
-  class="ag-theme-quartz"
-  style="height: 500px"
-  [rowData]="rowData"
-  
-  [columnDefs]="colDefs"
-  [defaultColDef]="defaultColDef"
-  [pagination]="pagination"
-  [paginationPageSizeSelector]="paginationPageSizeSelector"
-  (gridReady)="onGridReady($event)"
-/>
+<!-- <div class="grid-container"> -->
+
+  <button *ngIf="isExported" (click)="onExportClick()">{{ exportLabel }}</button>
+  <ag-grid-angular
+    class="ag-theme-quartz"
+    style="height: 500px"
+    [rowData]="rowData"
+    
+    [columnDefs]="colDefs"
+    [defaultColDef]="defaultColDef"
+    [pagination]="pagination"
+    [paginationPageSizeSelector]="paginationPageSizeSelector"
+    (gridReady)="onGridReady($event)"
+  />
+<!-- </div> -->
 <!--Add  [gridOptions]="{ theme: 'legacy' }" to ag-grid -->

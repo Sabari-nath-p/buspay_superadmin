@@ -12,14 +12,30 @@ import { TabsPanelComponent } from '../../common-components/tabs-panel/tabs-pane
 import { UsersService } from '../../../shared/services/users/users.service';
 import {
   ProfileParent,
+  SettleStatus,
   StatusCode,
+  UserStatus,
 } from '../../../core/utilities/buspay.enums';
 import { AvatarService } from '../../../shared/services/avatar.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ListBusesComponent } from './list-buses/list-buses.component';
+import { ListConductorsComponent } from './list-conductors/list-conductors.component';
+import { ListSettlementsComponent } from './list-settlements/list-settlements.component';
+import { ProfileAnalyticsComponent } from './profile-analytics/profile-analytics.component';
+import { AlertConfirmService } from '../../common-components/alert-confirm/alert-confirm.service';
+import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, TabsPanelComponent],
+  imports: [
+    CommonModule,
+    TabsPanelComponent,
+    ListBusesComponent,
+    ListConductorsComponent,
+    ListSettlementsComponent,
+    ProfileAnalyticsComponent,
+  ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -42,14 +58,29 @@ export class UserProfileComponent {
   // userDetails!: any;
   Parent = ProfileParent;
   userProfileImage!: any;
+  userId!: any;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private userService: UsersService,
-    private avatarsService: AvatarService
+    private avatarsService: AvatarService,
+    private route: ActivatedRoute,
+    private alertConfirmService: AlertConfirmService,
+    private router: Router,
+    private toastService: ToastService
   ) {}
   ngOnInit(): void {
-    //this.getUserDetailsById(1);
+    const navigation = history.state;
+    if (navigation && navigation.userDetails) {
+      this.userDetails = navigation.userDetails;
+      this.userId = this.userDetails.id;
+      this.parentScreen = navigation.parent;
+    } else {
+      this.userId = Number(this.route.snapshot.paramMap.get('id'));
+
+      this.getUserDetailsById(this.userId);
+    }
+
     this.getUserProfileImage();
   }
 
@@ -70,14 +101,12 @@ export class UserProfileComponent {
   getUserDetailsById(userId: number) {
     this.userService.getUserById(userId).subscribe((res) => {
       if (res.statusCode === StatusCode.Success) {
-        //console.log('User : ', res.data);
         this.userDetails = res.data;
       }
     });
   }
 
   onSelectionChanged(event: any) {
-    console.log(event);
     this.currentTab = event;
   }
 
@@ -87,5 +116,34 @@ export class UserProfileComponent {
         this.userDetails.name
       );
     }
+  }
+
+  onApprove(): void {
+    this.userService
+      .changeUserStatus(this.userId, UserStatus.ACTIVE)
+      .subscribe((res: any) => {
+        this.toastService.success(res.message);
+        this.router.navigate(['/dashboard']);
+      });
+  }
+
+  onRejected(): void {
+    this.alertConfirmService
+      .confirm(
+        'Confirmation',
+        'Are you sure you want to decline this owner?',
+        'Yes',
+        'Cancel'
+      )
+      .then((isConfirmed: boolean) => {
+        if (isConfirmed) {
+          this.userService
+            .changeUserStatus(this.userId, UserStatus.PENDING)
+            .subscribe((res: any) => {
+              this.toastService.success(res.message);
+              this.router.navigate(['/dashboard']);
+            });
+        }
+      });
   }
 }

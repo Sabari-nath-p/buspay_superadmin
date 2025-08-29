@@ -17,7 +17,7 @@
         </ng-container>
       </div>
 
-      <div class="modal-footer" *ngIf="isFooterRequired">
+      <!-- <div class="modal-footer" *ngIf="isFooterRequired">
         <button
           type="button"
           class="btn btn-primary"
@@ -25,6 +25,13 @@
           (click)="hideModal()"
         >
           Close
+        </button>
+      </div> -->
+      <div class="modal-footer" *ngIf="isFooterRequired">
+        <button *ngFor="let btn of buttons" 
+                [ngClass]="btn.class || 'btn btn-secondary'" 
+                (click)="onButtonClick(btn)">
+          {{ btn.label }}
         </button>
       </div>
     </div>

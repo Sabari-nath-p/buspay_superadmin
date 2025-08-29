@@ -21,6 +21,11 @@ export const menuList: MenuItem[] = [
     icon: 'integrations',
   },
   {
+    routerLink: '/settlements',
+    menuTitle: 'Settlements',
+    icon: 'integrations',
+  },
+  {
     routerLink: 'coupons',
     menuTitle: 'Coupons',
     icon: 'integrations',
